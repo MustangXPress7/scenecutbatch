@@ -1,46 +1,44 @@
-"""Tests for detector (Task 01-01-B)."""
+"""Tests for detector (Plan 01-04-B) using mocked scenedetect."""
 
-import cv2
-import numpy as np
-import pytest
 from fractions import Fraction
+from pathlib import Path
 
 from scenecutbatch.core.models import DetectConfig
 from scenecutbatch.detection.detector import detect_clip
 
 
-def _make_cut_clip(tmp_path, name="cut_clip.mp4", fps=30.0, size=(64, 64), cut_at=30, total=60):
-    """Write a synthetic clip with a hard cut (black->white) at `cut_at`."""
-    path = tmp_path / name
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-    writer = cv2.VideoWriter(str(path), fourcc, fps, size)
-    try:
-        for i in range(total):
-            frame = np.zeros((size[1], size[0], 3), dtype=np.uint8) if i < cut_at else np.full(
-                (size[1], size[0], 3), 255, dtype=np.uint8
-            )
-            writer.write(frame)
-    finally:
-        writer.release()
-    return path
-
-
-def test_detect_clip_returns_scenes(tmp_path):
-    """detect_clip on a real clip returns DetectionResult with >= 1 Scene."""
-    path = _make_cut_clip(tmp_path)
-    result = detect_clip(path, DetectConfig())
+def test_detect_clip_returns_scenes(tmp_path, mocked_scenedetect, config):
+    """detect_clip on a tmp clip returns DetectionResult with >= 1 Scene,
+    start_tc/end_tc/duration_sec populated, detection_score == 0.0 placeholder."""
+    clip = tmp_path / "clip.mp4"
+    clip.write_bytes(b"dummy video bytes")
+    result = detect_clip(clip, config)
     assert result.error is None, result.error
     assert len(result.scenes) >= 1
     scene = result.scenes[0]
-    assert scene.start_tc and scene.end_tc
+    assert scene.start_tc
+    assert scene.end_tc
     assert scene.duration_sec >= 0
-    assert scene.detection_score == 0.0  # placeholder
+    assert scene.detection_score == 0.0
     assert result.fps == Fraction(30, 1)
 
 
-def test_detect_clip_missing_file_returns_error(tmp_path):
-    """On missing/corrupt file returns error set and empty scenes without raising."""
+def test_detect_clip_bad_file_error_isolation(tmp_path, config):
+    """detect_clip on nonexistent path returns error set, empty scenes, does not raise.
+
+    Real scenedetect is used here (no mock) so open_video raises OSError on the
+    missing file and detect_clip's per-clip error isolation (D-03) catches it.
+    """
     missing = tmp_path / "does_not_exist.mp4"
-    result = detect_clip(missing, DetectConfig())
+    result = detect_clip(missing, config)
     assert result.error is not None
     assert result.scenes == []
+
+
+def test_detect_clip_config_defaults(tmp_path, mocked_scenedetect, config):
+    """threshold 27.0 and min_scene_len 15 are passed to ContentDetector (D-01)."""
+    clip = tmp_path / "clip.mp4"
+    clip.write_bytes(b"dummy video bytes")
+    detect_clip(clip, config)
+    kwargs = mocked_scenedetect["content_detector_kwargs"]
+    assert kwargs == {"threshold": 27.0, "min_scene_len": 15}
