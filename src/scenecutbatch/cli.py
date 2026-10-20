@@ -112,8 +112,10 @@ def _run_detect(
     if config:
         cfg = _load_config(config, cfg)
 
-    cfg.threshold = threshold
-    cfg.min_scene_len_frames = min_scene_len
+    cfg.threshold = threshold if threshold is not None else cfg.threshold
+    cfg.min_scene_len_frames = (
+        min_scene_len if min_scene_len is not None else cfg.min_scene_len_frames
+    )
     cfg.recursive = recursive
     cfg.confidence_enabled = confidence
     if extensions is not None:
@@ -157,11 +159,11 @@ def detect(
     out_dir: Optional[str] = typer.Option(
         None, "--out-dir", help="Output directory (default: INPUT_DIR/cuts)"
     ),
-    threshold: float = typer.Option(
-        27.0, "--threshold", help="ContentDetector threshold"
+    threshold: Optional[float] = typer.Option(
+        None, "--threshold", help="ContentDetector threshold"
     ),
-    min_scene_len: int = typer.Option(
-        15, "--min-scene-len", help="Min scene length in frames"
+    min_scene_len: Optional[int] = typer.Option(
+        None, "--min-scene-len", help="Min scene length in frames"
     ),
     recursive: bool = typer.Option(
         False, "--recursive", help="Recurse into subfolders"
