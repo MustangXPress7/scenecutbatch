@@ -12,7 +12,7 @@
 
 ---
 
-### Phase 1 — Detection core (Complete)
+### Phase 1: Detection core
 
 - Wrap PySceneDetect ContentDetector.
 - Media scanning (reuse EsqueletoEdit patterns): supported extensions, ffprobe metadata.
@@ -21,7 +21,7 @@
 
 ---
 
-### Phase 2 — Launch prep & multi-platform (Complete)
+### Phase 2: Launch prep & multi-platform
 
 - Public GitHub repository "Scene Cut Batch" at https://github.com/MustangXPress7/scenecutbatch
 - README.md with installation and usage instructions for Windows, Mac, and Linux
@@ -37,19 +37,19 @@
 
 ---
 
-### Phase 3 — Confidence (Pending)
+### Phase 3: Confidence
 
 - Per-scene score + G/Y/R mapping.
 - Embed markers in XML.
 
 ---
 
-### Phase 4 — Packaging (Pending)
+### Phase 4: Packaging
 
 - Pinokio recipe, Nuitka/PyInstaller binary.
 
 ---
 
-### Phase 5 — Integration (Pending)
+### Phase 5: Integration
 
 - Clean Python API, schema docs, integration guide for unified tool.
