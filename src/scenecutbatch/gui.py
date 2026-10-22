@@ -3,14 +3,32 @@
 from __future__ import annotations
 
 import json
+import sys
 import threading
 import tkinter as tk
-from tkinter import filedialog, messagebox, scrolledtext, ttk
 from pathlib import Path
+from tkinter import filedialog, messagebox, scrolledtext, ttk
 from typing import Optional
 
 from .core.batch import detect_folder
 from .core.models import DetectConfig
+
+
+def _asset_path(name: str) -> Path:
+    """Resolve an asset path both in development and under PyInstaller."""
+    # PyInstaller one-folder bundles assets next to the executable;
+    # one-file extracts to sys._MEIPASS at runtime.
+    if getattr(sys, "frozen", False):
+        base = Path(sys.executable).parent
+        candidates = [base / name, Path(sys._MEIPASS) / name]  # type: ignore[attr-defined]
+    else:
+        base = Path(__file__).resolve().parent.parent.parent  # repo root
+        candidates = [base / name]
+    for c in candidates:
+        if c.exists():
+            return c
+    # Fallback: return the path even if missing (caller handles it)
+    return base / name
 
 
 class SceneCutBatchGUI(tk.Tk):
@@ -44,10 +62,25 @@ class SceneCutBatchGUI(tk.Tk):
         container = ttk.Frame(self, padding="12")
         container.pack(fill=tk.BOTH, expand=True)
 
+        # --- Logo ---
+        logo_path = _asset_path("assets/logo.png")
+        if logo_path.exists():
+            try:
+                logo_img = tk.PhotoImage(file=str(logo_path))
+                # Escalar si es demasiado grande (máx 200 px de ancho)
+                if logo_img.width() > 200:
+                    ratio = max(1, logo_img.width() // 200)
+                    logo_img = logo_img.subsample(ratio, ratio)
+                logo_label = ttk.Label(container, image=logo_img)
+                logo_label.image = logo_img  # mantener referencia para evitar GC
+                logo_label.pack(pady=(0, 10))
+            except tk.TclError:
+                pass  # Si no se puede cargar la imagen, se omite silenciosamente
+
         # Título
         title = ttk.Label(
             container,
-            text="SceneCutBatch",
+            text="Scene Cut Batch",
             font=("Segoe UI", 16, "bold"),
         )
         title.pack(pady=(0, 8))

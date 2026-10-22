@@ -1,8 +1,8 @@
 ---
 gsd_state_version: "1.0"
 status: complete
-stopped_at: Phase 02 complete — all plans executed, VERIFICATION.md written
-last_updated: "2026-10-22T02:30:00.000Z"
+stopped_at: Phase 02 complete — all plans executed + logo in GUI + release zip Windows, VERIFICATION.md written
+last_updated: "2026-10-22T03:00:00.000Z"
 state_head: a6f5f75efe997d69f1bf1aa07d209c8cfb8175bc
 progress:
   total_phases: 6
@@ -54,9 +54,20 @@ Phase 02 complete. Next: user pushes code to GitHub (https://github.com/MustangX
 
 **macOS/Linux:** Requires testing on respective platforms. Installers and scripts are present.
 
+## Additional Phase 2 Enhancements (Logo + Releases)
+
+| Enhancement | File | Status |
+|-------------|------|--------|
+| Logo in GUI (Tkinter) | `src/scenecutbatch/gui.py` | Complete — logo shown above window title |
+| Release packaging script | `scripts/make_release.py` | Complete — generates .zip per platform |
+| Windows release zip | `releases/SceneCutBatch-0.1.0-Windows.zip` | Complete — includes .exe, scripts, assets, source |
+| PyInstaller spec updated | `scenecutbatch.spec` | Complete — `assets/logo.png` added to datas |
+
+**To generate macOS/Linux releases:** run `python scripts/make_release.py --version 0.1.0 --platform macos` (on macOS host) and `--platform linux` (on Linux host).
+
 
 ## Session
 
-**Last session:** 2026-10-22T02:30:00.000Z
-**Stopped at:** Phase 02 complete — all 4 plans executed, VERIFICATION.md written
+**Last session:** 2026-10-22T03:00:00.000Z
+**Stopped at:** Phase 02 complete — all 4 plans + logo in GUI + Windows release zip completed, VERIFICATION.md written
 **Resume file:** .planning/phases/02-scene-cut-batch/02-CONTEXT.md
