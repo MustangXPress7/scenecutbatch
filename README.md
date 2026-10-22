@@ -121,6 +121,39 @@ bash install_linux.sh
 
 ---
 
+## Prebuilt releases
+
+Binaries for all three platforms are built automatically by GitHub Actions
+(`.github/workflows/release.yml`) and published to the
+[Releases page](https://github.com/MustangXPress7/scenecutbatch/releases):
+
+| Platform | Artifacts |
+|---|---|
+| Windows | `SceneCutBatch-<version>-Windows.zip` (contains `scenecutbatch.exe`, GUI + CLI) |
+| macOS | `SceneCutBatch-<version>-macos.zip` (portable binary) + `SceneCutBatch-<version>-macOS.zip` (`.app` bundle) |
+| Linux | `SceneCutBatch-<version>-linux.zip` + `.deb` + AppImage |
+
+To publish a new release, push a version tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+PyInstaller does not cross-compile: each platform is built on its own runner
+(windows-latest, macos-latest, ubuntu-latest). You can also trigger a build
+manually from the Actions tab ("Run workflow") without publishing a release.
+
+To build locally on the target OS:
+
+```bash
+pip install -e . && pip install "scenedetect[opencv]" pyinstaller
+pyinstaller scenecutbatch.spec --clean --noconfirm
+python scripts/make_release.py --version 0.1.0 --platform <windows|macos|linux>
+```
+
+---
+
 ## Usage
 
 ```bash
