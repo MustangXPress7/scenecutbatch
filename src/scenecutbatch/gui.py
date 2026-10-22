@@ -52,7 +52,19 @@ class SceneCutBatchGUI(tk.Tk):
         self.confidence = tk.BooleanVar(value=False)
         self.is_running = False
 
+        self._set_window_icon()
         self._build_ui()
+
+    def _set_window_icon(self) -> None:
+        """Aplica el logo como icono de ventana y barra de tareas."""
+        logo_path = _asset_path("assets/logo.png")
+        if logo_path.exists():
+            try:
+                icon = tk.PhotoImage(file=str(logo_path))
+                self.iconphoto(True, icon)
+                self._icon_image = icon  # mantener referencia para evitar GC
+            except tk.TclError:
+                pass
 
     # ------------------------------------------------------------------ #
     # Construcción de la interfaz

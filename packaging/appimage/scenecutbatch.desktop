@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Scene Cut Batch
-Comment=Batch scene-cut detection for Adobe Premiere Pro
-Exec=scenecutbatch detect %F
-Icon=scenecutbatch
-Terminal=false
-Type=Application
-Categories=AudioVideo;Video;
