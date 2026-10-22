@@ -5,7 +5,7 @@
 | Phase | Goal | Key Deliverable | Status |
 |-------|------|-----------------|--------|
 | 1 | Detection core (PySceneDetect wrapper + batch runner + error isolation) | `detect_folder()` returns per-clip scene lists | Complete |
-| 2 | Launch prep & multi-platform distribution | GitHub repo, README, LICENSE, installers, packaging, cross-platform tests | In Progress |
+| 2 | Launch prep & multi-platform distribution | GitHub repo, README, LICENSE, installers, packaging, cross-platform tests | Complete |
 | 3 | CLI + progress reporting + config | `scenecutbatch` CLI with flags | Pending |
 | 4 | Confidence scoring + markers (optional) | G/Y/R markers in XML | Pending |
 | 5 | Packaging (Pinokio + binary) | One-click install + standalone binary | Pending |
@@ -22,7 +22,7 @@
 
 ---
 
-### Phase 2 — Launch prep & multi-platform (In Progress)
+### Phase 2 — Launch prep & multi-platform (Complete)
 
 - Public GitHub repository "Scene Cut Batch" at https://github.com/MustangXPress7/scenecutbatch
 - README.md with installation and usage instructions for Windows, Mac, and Linux
