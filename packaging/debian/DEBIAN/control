@@ -1,0 +1,11 @@
+Package: scenecutbatch
+Version: 0.1.0
+Section: video
+Priority: optional
+Architecture: amd64
+Depends: python3 (>= 3.10), python3-pip, ffmpeg
+Maintainer: Scene Cut Batch <maintainer@scenecutbatch.com>
+Description: Batch scene-cut detection for Adobe Premiere Pro
+ SceneCutBatch detects hard scene cuts across folders of video clips using
+ PySceneDetect and emits Premiere-importable FCP7 XML files with virtual
+ subclips referencing the original media (no duplication).

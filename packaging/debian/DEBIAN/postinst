@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+echo "Configuring scenecutbatch..."
+
+# Ensure Python dependencies are installed
+if command -v pip3 >/dev/null 2>&1; then
+    pip3 install scenedetect[opencv] typer rich pyyaml || true
+fi
+
+# Make the launcher executable
+if [ -f /usr/bin/scenecutbatch ]; then
+    chmod +x /usr/bin/scenecutbatch
+fi
+
+echo "scenecutbatch installed. Run: scenecutbatch detect /path/to/clips"
+exit 0
