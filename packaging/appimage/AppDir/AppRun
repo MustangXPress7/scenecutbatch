@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# AppRun de SceneCutBatch: sin argumentos lanza la GUI, con argumentos la CLI
+# (el binario compilado ya implementa esa lógica de entrada).
+HERE="$(dirname "$(readlink -f "${0}")")"
+exec "$HERE/usr/bin/scenecutbatch" "$@"
