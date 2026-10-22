@@ -1,16 +1,17 @@
 ---
 gsd_state_version: "1.0"
-status: not_started
-stopped_at: Phase 01 complete — all phases complete
-last_updated: "2026-10-20T17:44:08.817Z"
+status: in_progress
+stopped_at: Phase 01 complete — Phase 02 Plan 02-01 complete, starting 02-02
+last_updated: "2026-10-22T00:30:00.000Z"
 state_head: a6f5f75efe997d69f1bf1aa07d209c8cfb8175bc
 progress:
-  total_phases: 1
+  total_phases: 6
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
-current_phase_name: detection-core
+  total_plans: 4
+  completed_plans: 1
+  percent: 25
+current_phase_name: scene-cut-batch
+current_plan: 02-01
 ---
 
 # Project State — SceneCutBatch
@@ -20,19 +21,19 @@ current_phase_name: detection-core
 **Core Value**: Batch scene-cut detection across folders of clips, emitting
 Premiere-importable FCP7 XML with virtual subclips.
 
-**Current Focus**: Pre-implementation. Handoff documentation complete.
+**Current Focus**: Executing Phase 02 (scene-cut-batch) — launch prep & multi-platform distribution.
 
 ## Current Position
 
 | Field | Value |
 |-------|-------|
 | **Milestone** | v1.0 — Standalone cut detector |
-| **Active Phase** | None (not started) |
-| **Progress** | 0% |
+| **Active Phase** | 02-scene-cut-batch (Wave 1, Plan 02-02 of 4) |
+| **Progress** | 25% |
 
 ## Next Action
 
-`/gsd-plan-phase 1` to create the detailed plan for Phase 1 (Detection core).
+Execute Phase 02 Plan 02-02: Linux install script + .deb/.rpm/AppImage packaging.
 
 ## Notes
 
@@ -43,6 +44,6 @@ Premiere-importable FCP7 XML with virtual subclips.
 
 ## Session
 
-**Last session:** 2026-10-20T12:12:48.376Z
-**Stopped at:** Phase 01 complete — all phases complete
-**Resume file:** .planning/phases/01-detection-core/01-CONTEXT.md
+**Last session:** 2026-10-22T00:30:00.000Z
+**Stopped at:** Phase 02 Plan 02-01 complete (SUMMARY.md written), starting Plan 02-02
+**Resume file:** .planning/phases/02-scene-cut-batch/02-CONTEXT.md
