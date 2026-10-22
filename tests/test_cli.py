@@ -97,12 +97,12 @@ def test_cli_bad_input_dir_exit_2(tmp_path, monkeypatch):
 
 
 def test_cli_version_prints_0_1_0():
-    """--version prints __version__ (0.1.0)."""
+    """--version prints 'Scene Cut Batch <version>'."""
     out = io.StringIO()
     with pytest.raises(typer.exceptions.Exit) as exc, contextlib.redirect_stdout(out):
         _version_callback(True)
     assert exc.value.exit_code == 0
-    assert out.getvalue().strip() == "0.1.0"
+    assert out.getvalue().strip() == "Scene Cut Batch 0.1.0"
 
 
 def test_cli_dry_run_writes_nothing(tmp_path, monkeypatch):
