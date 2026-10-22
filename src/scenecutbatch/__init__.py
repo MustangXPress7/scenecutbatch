@@ -1,4 +1,4 @@
-"""SceneCutBatch — batch scene-cut detection for Premiere Pro."""
+"""Scene Cut Batch — batch scene-cut detection for Premiere Pro."""
 
 __version__ = "0.1.0"
 

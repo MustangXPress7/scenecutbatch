@@ -1,4 +1,4 @@
-"""CLI for SceneCutBatch."""
+"""CLI for Scene Cut Batch."""
 
 from __future__ import annotations
 
@@ -13,12 +13,10 @@ from . import __version__
 from .core.batch import detect_folder
 from .core.models import DetectConfig
 
-app = typer.Typer(help="Batch scene-cut detection for Premiere Pro.")
-
 
 def _version_callback(value: bool) -> None:
     if value:
-        typer.echo(__version__)
+        typer.echo(f"Scene Cut Batch {__version__}")
         raise typer.Exit()
 
 
@@ -153,9 +151,8 @@ def _run_detect(
     )
 
 
-@app.command()
 def detect(
-    input_dir: str = typer.Argument(..., help="Folder of clips"),
+    input_dir: str,
     out_dir: Optional[str] = typer.Option(
         None, "--out-dir", help="Output directory (default: INPUT_DIR/cuts)"
     ),
@@ -191,7 +188,7 @@ def detect(
         help="Print version and exit",
     ),
 ):
-    """Detect scene cuts in a folder of clips."""
+    """Detect scene cuts in a folder of clips (Scene Cut Batch)."""
     _run_detect(
         Path(input_dir),
         Path(out_dir) if out_dir else None,
@@ -207,7 +204,13 @@ def detect(
 
 
 def main() -> None:
-    app()
+    # Configure stdout to use UTF-8 with replace for Windows console compatibility
+    import sys
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    typer.run(detect)
 
 
 if __name__ == "__main__":
