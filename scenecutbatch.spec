@@ -1,6 +1,12 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import sys
+
 block_cipher = None
+
+# Icono del ejecutable: .ico en Windows; en macOS/Linux PyInstaller no acepta
+# .ico (macOS usa .icns), por lo que se deja sin icono en esas plataformas.
+_exe_icon = "assets/logo.ico" if sys.platform == "win32" else None
 
 a = Analysis(
     ['src/_entry.py'],
@@ -82,5 +88,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=None,
+    icon=_exe_icon,
 )
