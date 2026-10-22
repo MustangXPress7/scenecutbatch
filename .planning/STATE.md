@@ -5,8 +5,8 @@ stopped_at: Phase 02 complete — all plans executed + logo in GUI + release zip
 last_updated: "2026-10-22T03:00:00.000Z"
 state_head: a6f5f75efe997d69f1bf1aa07d209c8cfb8175bc
 progress:
-  total_phases: 6
-  completed_phases: 1
+  total_phases: 5
+  completed_phases: 2
   total_plans: 4
   completed_plans: 4
   percent: 100
@@ -33,7 +33,7 @@ Premiere-importable FCP7 XML with virtual subclips.
 
 ## Next Action
 
-Phase 02 complete. Next: user pushes code to GitHub (https://github.com/MustangXPress7/scenecutbatch), completes macOS/Linux manual testing, then `/gsd-plan-phase 3` for Phase 3 (CLI + progress reporting + config).
+Phase 02 complete. Next: user pushes code to GitHub (https://github.com/MustangXPress7/scenecutbatch), completes macOS/Linux manual testing, then `/gsd-plan-phase 3` for Phase 3 (Confidence scoring + markers). Note: the former "Phase 3 — CLI + progress reporting + config" was removed after review — its scope (requirements UX-01..04) was delivered and verified inside Phase 1, so no separate phase was warranted.
 
 ## Notes
 

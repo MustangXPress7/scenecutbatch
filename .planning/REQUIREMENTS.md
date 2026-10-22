@@ -67,9 +67,10 @@
 
 | REQ | Phase | Status |
 |-----|-------|--------|
-| CUT-01..05 | Phase 1 | Pending |
-| OUT-01..05 | Phase 2 | Pending |
-| UX-01..04 | Phase 3 | Pending |
-| CONF-01..03 | Phase 4 | Pending |
-| PKG-01..03 | Phase 5 | Pending |
-| INT-01..02 | Phase 6 | Pending |
+| CUT-01..05 | Phase 1 | Complete |
+| OUT-01..04 | Phase 1 | Complete |
+| OUT-05 | Phase 2 | Pending (manual Premiere smoke test) |
+| UX-01..04 | Phase 1 | Complete |
+| CONF-01..03 | Phase 3 | Pending |
+| PKG-01..03 | Phase 4 | Pending |
+| INT-01..02 | Phase 5 | Pending |
