@@ -8,5 +8,10 @@ build/
 *.egg-info/
 .pytest_cache/
 .coverage
-*.spec
 .env
+
+# Releases: los binarios se distribuyen como GitHub Releases, no en git
+releases/
+*-Portable.zip
+
+# NOTA: scenecutbatch.spec está versionado a propósito (receta de build)

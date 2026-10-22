@@ -32,9 +32,16 @@ def _files_for_platform(platform: str) -> list[tuple[Path, str]]:
     """Devuelve lista de (origen, destino_en_zip) para cada plataforma."""
     files: list[tuple[Path, str]] = []
 
+    # El ejecutable debe existir: PyInstaller no compila cruzado, así que hay
+    # que ejecutar este script en el SO objetivo. Si falta, es un error claro,
+    # no un zip vacío silencioso.
     exe = DIST_DIR / _exe_name(platform)
-    if exe.exists():
-        files.append((exe, _exe_name(platform)))
+    if not exe.exists():
+        raise FileNotFoundError(
+            f"No se encontro {exe}. Compila primero con: pyinstaller scenecutbatch.spec "
+            f"(debe ejecutarse en el SO objetivo: '{platform}')"
+        )
+    files.append((exe, _exe_name(platform)))
 
     # Scripts de lanzamiento por plataforma
     launchers = {
@@ -52,6 +59,13 @@ def _files_for_platform(platform: str) -> list[tuple[Path, str]]:
         p = REPO_ROOT / doc
         if p.exists():
             files.append((p, doc))
+
+    # Carpeta docs (documentación completa del proyecto)
+    docs_dir = REPO_ROOT / "docs"
+    if docs_dir.exists():
+        for f in docs_dir.rglob("*"):
+            if f.is_file():
+                files.append((f, f"docs/{f.relative_to(docs_dir)}"))
 
     # Carpeta assets (logo)
     assets_dir = REPO_ROOT / "assets"
