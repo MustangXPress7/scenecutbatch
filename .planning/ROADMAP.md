@@ -1,4 +1,4 @@
-# ROADMAP.md — SceneCutBatch
+# ROADMAP.md — Scene Cut Batch
 
 ## Phases
 
