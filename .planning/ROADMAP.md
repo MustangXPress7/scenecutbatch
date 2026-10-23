@@ -6,7 +6,7 @@
 |-------|------|-----------------|--------|
 | 1 | Detection core (PySceneDetect wrapper + batch runner + error isolation) | `detect_folder()` returns per-clip scene lists | Complete |
 | 2 | Launch prep & multi-platform distribution | GitHub repo, README, LICENSE, installers, packaging, cross-platform tests | Complete |
-| 3 | UI polish & public-facing presentation | Restyled GUI (complete interface visible) + neutral NLE terminology + public copy review | Pending |
+| 3 | UI polish & public-facing presentation | Restyled GUI (complete interface visible) + neutral NLE terminology + public copy review | Complete    |
 | 4 | Confidence scoring + markers (optional) | G/Y/R markers in XML | Pending |
 | 5 | Packaging (Pinokio + binary) | One-click install + standalone binary | Pending |
 | 6 | Integration API + docs for unified tool | Reusable Python API + schema docs | Pending |
@@ -50,21 +50,21 @@
 - **Bilingual GUI** (added 2026-10-23): English/Spanish with OS language auto-detection and in-app EN/ES switch — PRES-05.
 - **Studio signature** (added 2026-10-23): "Hecho por JMW Studio" in GUI, READMEs, CLI output and package metadata — PRES-06.
 
-**Plans:** 5 plans
+**Plans:** 5/5 plans complete
 
 Plans:
 **Wave 1**
-- [ ] 03-01-PLAN.md — Bilingual GUI rework (i18n catalog + layout + EN/ES switch + credit)
+- [x] 03-01-PLAN.md — Bilingual GUI rework (i18n catalog + layout + EN/ES switch + credit)
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 03-02-PLAN.md — Python source/docstring sweep + CLI version footer + pyproject metadata
-- [ ] 03-03-PLAN.md — READMEs + HANDOFF.md public copy sweep
+- [x] 03-02-PLAN.md — Python source/docstring sweep + CLI version footer + pyproject metadata
+- [x] 03-03-PLAN.md — READMEs + HANDOFF.md public copy sweep
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 03-04-PLAN.md — docs/ sweep (docs/09 reframed as extensibility) + repo-wide PRES-03 gate
+- [x] 03-04-PLAN.md — docs/ sweep (docs/09 reframed as extensibility) + repo-wide PRES-03 gate
 
 **Wave 4** *(blocked on Wave 3 completion)*
-- [ ] 03-05-PLAN.md — Packaging metadata (.deb/.rpm/.desktop) + phase-closing sweep + final review
+- [x] 03-05-PLAN.md — Packaging metadata (.deb/.rpm/.desktop) + phase-closing sweep + final review
 
 ---
 

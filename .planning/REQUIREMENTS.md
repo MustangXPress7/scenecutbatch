@@ -3,6 +3,7 @@
 ## v1 Requirements
 
 ### Detection
+
 - **CUT-01**: Scan a folder (recursively optional) and collect supported video
   files (mp4, mov, mxf, avi, mkv, webm) — case-insensitive.
 - **CUT-02**: Detect hard scene cuts per clip using PySceneDetect ContentDetector.
@@ -14,6 +15,7 @@
   error and continue.
 
 ### Output
+
 - **OUT-01**: Write one FCP7 XML file per input clip.
 - **OUT-02**: Output filename convention: `<clip_stem>_cuts.xml` in an output
   directory (default: alongside input or `--out-dir`).
@@ -27,21 +29,23 @@
 - **OUT-06**: (Optional, v1.1) Export EDL in addition to FCP XML.
 
 ### Presentation (Phase 3 — UI polish & public copy)
-- [ ] **PRES-01**: The GUI shows its complete interface (all controls, log, status)
+
+- [x] **PRES-01**: The GUI shows its complete interface (all controls, log, status)
   without clipping at the default window size, with the logo present.
-- [ ] **PRES-02**: All user-facing copy uses editor-agnostic terminology: FCP7 XML
+- [x] **PRES-02**: All user-facing copy uses editor-agnostic terminology: FCP7 XML
   importable by professional video editors. No Premiere-Pro-exclusive claims.
-- [ ] **PRES-03**: No internal-development references (EsqueletoEdit, parent
+- [x] **PRES-03**: No internal-development references (EsqueletoEdit, parent
   ecosystem, integration plans, internal phase status) in any repository text:
   code, READMEs, docs/, packaging metadata, GUI/CLI copy.
-- [ ] **PRES-04**: Terminology and messaging consistent across GUI, CLI, READMEs,
+- [x] **PRES-04**: Terminology and messaging consistent across GUI, CLI, READMEs,
   pyproject and package metadata (.deb/.rpm/.desktop).
-- [ ] **PRES-05**: The GUI is bilingual English/Spanish: auto-detects the OS
+- [x] **PRES-05**: The GUI is bilingual English/Spanish: auto-detects the OS
   language on start and offers an in-app EN/ES switch that applies immediately.
-- [ ] **PRES-06**: Studio signature "Hecho por JMW Studio" present in the GUI, the
+- [x] **PRES-06**: Studio signature "Hecho por JMW Studio" present in the GUI, the
   READMEs, the CLI about/output and package metadata (Maintainer).
 
 ### Progress & UX
+
 - **UX-01**: Report progress per clip (index/total, clip name, ETA) to stdout
   and/or a progress file (JSON) for GUI/polling.
 - **UX-02**: CLI supports `--json-progress` for machine-readable streaming
@@ -50,6 +54,7 @@
 - **UX-04**: Configurable via CLI flags and a config file (YAML/TOML).
 
 ### Confidence (optional, v1.1)
+
 - **CONF-01**: Compute a per-scene confidence score from detection score + scene
   duration + min-length proximity.
 - **CONF-02**: Map score to Green (>=0.85) / Yellow (0.60-0.84) / Red (<0.60).
@@ -57,11 +62,13 @@
   editors display them.
 
 ### Packaging
+
 - **PKG-01**: Pinokio one-click recipe (consistent with EsqueletoEdit).
 - **PKG-02**: Standalone binary via Nuitka/PyInstaller.
 - **PKG-03**: Model/dependency vendoring not required (PySceneDetect is pip).
 
 ### Integration (future)
+
 - **INT-01**: Expose a Python API (`scenecutbatch.detect(folder, ...)`) reusable
   by EsqueletoEdit's unified tool.
 - **INT-02**: Output schema documented so the unified tool can consume it.
