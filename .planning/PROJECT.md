@@ -86,6 +86,23 @@ any hard dependency on a host application.
 - Widget reference retention (`logo_label.image`) across rebuilds to prevent GC
 - Late-binding-safe lambdas in progress event logging (capture via default arg)
 
+## Distribution Decisions
+
+**D-37: Executable-only distribution (Windows).** The release artifact is the standalone `.exe`
+produced by PyInstaller, not a `.zip` bundle. The `.exe` is self-contained (embeds Python
+interpreter, all dependencies, and the `assets/logo.png` icon), so it runs by itself without
+any accompanying files. `run.bat` / `install.bat` are convenience scripts only and are not
+required for execution. This avoids shipping redundant ZIPs that duplicate what the `.exe`
+already contains.
+
+**D-38: macOS installation via Homebrew tap.** macOS users install via the project's Homebrew
+tap at `https://github.com/MustangXPress7/homebrew-tap` rather than downloading a standalone
+`.app` bundle or `.zip`. No macOS binary is published as a release artifact.
+
+**D-39: Logo refresh.** `assets/logo.ico` regenerated from `assets/logo.png` (700×700 RGBA)
+with embedded sizes 16, 32, 48, 64, 128, 256 px. The `.exe` embeds this icon for the Windows
+taskbar/window titlebar.
+
 
 ## Relationship to Other Tools
 
