@@ -17,6 +17,7 @@ from .core.models import DetectConfig
 def _version_callback(value: bool) -> None:
     if value:
         typer.echo(f"Scene Cut Batch {__version__}")
+        typer.echo("Hecho por JMW Studio")
         raise typer.Exit()
 
 
@@ -188,7 +189,12 @@ def detect(
         help="Print version and exit",
     ),
 ):
-    """Detect scene cuts in a folder of clips (Scene Cut Batch)."""
+    """Detect scene cuts in a folder of clips (Scene Cut Batch).
+
+    Detects scene cuts across a folder of clips and emits one FCP7 XML
+    (xmeml) per clip, importable by professional video editors such as
+    Premiere Pro, DaVinci Resolve and other NLEs that read FCP7 XML.
+    """
     _run_detect(
         Path(input_dir),
         Path(out_dir) if out_dir else None,
