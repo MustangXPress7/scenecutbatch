@@ -41,6 +41,8 @@
 
 ### Phase 3: UI polish & public-facing presentation
 
+**Requirements:** PRES-01, PRES-02, PRES-03, PRES-04, PRES-05, PRES-06
+
 - **GUI layout rework**: the new logo (700×700 shown at ~233 px) crams the 700×520 window — controls, log and status get clipped. Redesign the layout (logo placement, header, spacing, window sizing) so the complete interface is visible and usable.
 - **Neutral NLE terminology**: replace Premiere-Pro-exclusive claims ("for Adobe Premiere Pro", "imports directly into Premiere") with accurate, editor-agnostic phrasing: FCP7 XML (xmeml) importable by professional video editors (Premiere Pro, DaVinci Resolve and other NLEs that read FCP7 XML).
 - **Public copy review**: remove/neutralize internal-development references everywhere (EsqueletoEdit, "parent ecosystem", integration plans, phase-status text) in code, READMEs, docs/, packaging metadata and GUI/CLI copy.
@@ -51,10 +53,17 @@
 **Plans:** 5 plans
 
 Plans:
+**Wave 1**
 - [ ] 03-01-PLAN.md — Bilingual GUI rework (i18n catalog + layout + EN/ES switch + credit)
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 03-02-PLAN.md — Python source/docstring sweep + CLI version footer + pyproject metadata
 - [ ] 03-03-PLAN.md — READMEs + HANDOFF.md public copy sweep
+
+**Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 03-04-PLAN.md — docs/ sweep (docs/09 reframed as extensibility) + repo-wide PRES-03 gate
+
+**Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 03-05-PLAN.md — Packaging metadata (.deb/.rpm/.desktop) + phase-closing sweep + final review
 
 ---

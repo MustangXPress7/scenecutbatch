@@ -27,18 +27,18 @@
 - **OUT-06**: (Optional, v1.1) Export EDL in addition to FCP XML.
 
 ### Presentation (Phase 3 — UI polish & public copy)
-- **PRES-01**: The GUI shows its complete interface (all controls, log, status)
+- [ ] **PRES-01**: The GUI shows its complete interface (all controls, log, status)
   without clipping at the default window size, with the logo present.
-- **PRES-02**: All user-facing copy uses editor-agnostic terminology: FCP7 XML
+- [ ] **PRES-02**: All user-facing copy uses editor-agnostic terminology: FCP7 XML
   importable by professional video editors. No Premiere-Pro-exclusive claims.
-- **PRES-03**: No internal-development references (EsqueletoEdit, parent
+- [ ] **PRES-03**: No internal-development references (EsqueletoEdit, parent
   ecosystem, integration plans, internal phase status) in any repository text:
   code, READMEs, docs/, packaging metadata, GUI/CLI copy.
-- **PRES-04**: Terminology and messaging consistent across GUI, CLI, READMEs,
+- [ ] **PRES-04**: Terminology and messaging consistent across GUI, CLI, READMEs,
   pyproject and package metadata (.deb/.rpm/.desktop).
-- **PRES-05**: The GUI is bilingual English/Spanish: auto-detects the OS
+- [ ] **PRES-05**: The GUI is bilingual English/Spanish: auto-detects the OS
   language on start and offers an in-app EN/ES switch that applies immediately.
-- **PRES-06**: Studio signature "Hecho por JMW Studio" present in the GUI, the
+- [ ] **PRES-06**: Studio signature "Hecho por JMW Studio" present in the GUI, the
   READMEs, the CLI about/output and package metadata (Maintainer).
 
 ### Progress & UX

@@ -19,59 +19,59 @@ as delivered in Phases 1-2.
 <decisions>
 ## Implementation Decisions
 
-### D-31: GUI layout rework (PRES-01)
-- The logo (700×700 PNG) is displayed at ~233 px (subsample 3) at the top of a
-  700×520 window with minsize 650×450; title, subtitle, form rows, checkbox
-  rows, run button, progress bar, log (12 lines) and status do not all fit —
-  the interface reads as cramped/clipped.
-- **Decision:** full layout redesign — smaller/relocated logo (header next to
-  the title), window default size that fits the whole interface, consistent
-  spacing, and verification that nothing is clipped at min size.
-- **Reversibility:** reversible — GUI-only change, no data/output impact.
+- **D-31:** GUI layout rework (PRES-01) — full layout redesign: smaller/relocated logo (header next to the title), window default size that fits the whole interface, consistent spacing, and verification that nothing is clipped at min size.
+  - The logo (700×700 PNG) is displayed at ~233 px (subsample 3) at the top of a
+    700×520 window with minsize 650×450; title, subtitle, form rows, checkbox
+    rows, run button, progress bar, log (12 lines) and status do not all fit —
+    the interface reads as cramped/clipped.
+  - **Decision:** full layout redesign — smaller/relocated logo (header next to
+    the title), window default size that fits the whole interface, consistent
+    spacing, and verification that nothing is clipped at min size.
+  - **Reversibility:** reversible — GUI-only change, no data/output impact.
 
-### D-32: Neutral NLE terminology (PRES-02)
-- Current copy says "for Adobe Premiere Pro" / "genera XML para Premiere Pro".
-- **Decision:** replace with accurate editor-agnostic phrasing — the tool
-  emits FCP7 XML (xmeml) importable by professional video editors (Premiere
-  Pro, DaVinci Resolve and other NLEs reading FCP7 XML). Keep "FCP7 XML" as
-  the technical term.
-- **Reversibility:** reversible — copy-only.
+- **D-32:** Neutral NLE terminology (PRES-02) — replace Premiere-Pro-exclusive copy with accurate editor-agnostic phrasing: the tool emits FCP7 XML (xmeml) importable by professional video editors (Premiere Pro, DaVinci Resolve and other NLEs reading FCP7 XML). Keep "FCP7 XML" as the technical term.
+  - Current copy says "for Adobe Premiere Pro" / "genera XML para Premiere Pro".
+  - **Decision:** replace with accurate editor-agnostic phrasing — the tool
+    emits FCP7 XML (xmeml) importable by professional video editors (Premiere
+    Pro, DaVinci Resolve and other NLEs reading FCP7 XML). Keep "FCP7 XML" as
+    the technical term.
+  - **Reversibility:** reversible — copy-only.
 
-### D-33: Public copy review — remove internal references (PRES-03)
-- Internal-development text exists in: README.md ("Parent ecosystem:
-  EsqueletoEdit...", "Status: Active development (Phase 2...)"), README_USO.md,
-  README_PORTABLE.md, gui.py subtitle, `__init__.py` docstring, cli.py help,
-  pyproject description, packaging metadata (deb/rpm/desktop), docs/*.md
-  (EsqueletoEdit consistency notes, integration doc 09), docs/10-DECISIONS.md.
-- **Decision (user):** review and modify ALL texts, including technical docs
-  under docs/ (not only user-facing surfaces).
-- Internal planning artifacts under `.planning/` are GSD working state, not
-  product documentation — keep them consistent but they are not part of the
-  public-copy scope.
-- **Reversibility:** costly-ish — touches many files, but copy-only.
+- **D-33:** Public copy review — remove internal references (PRES-03) — user decision: review and modify ALL repository texts, including technical docs under docs/ (not only user-facing surfaces). `.planning/` remains GSD working state, outside the public-copy scope.
+  - Internal-development text exists in: README.md ("Parent ecosystem:
+    EsqueletoEdit...", "Status: Active development (Phase 2...)"), README_USO.md,
+    README_PORTABLE.md, gui.py subtitle, `__init__.py` docstring, cli.py help,
+    pyproject description, packaging metadata (deb/rpm/desktop), docs/*.md
+    (EsqueletoEdit consistency notes, integration doc 09), docs/10-DECISIONS.md.
+  - **Decision (user):** review and modify ALL texts, including technical docs
+    under docs/ (not only user-facing surfaces).
+  - Internal planning artifacts under `.planning/` are GSD working state, not
+    product documentation — keep them consistent but they are not part of the
+    public-copy scope.
+  - **Reversibility:** costly-ish — touches many files, but copy-only.
 
-### D-34: Cross-surface consistency (PRES-04)
-- GUI, CLI (`--version`, help epilogs), READMEs, pyproject.toml and package
-  metadata must tell the same story after the rewrite.
-- **Reversibility:** reversible.
+- **D-34:** Cross-surface consistency (PRES-04) — GUI, CLI (`--version`, help epilogs), READMEs, pyproject.toml and package metadata must tell the same story after the rewrite.
+  - GUI, CLI (`--version`, help epilogs), READMEs, pyproject.toml and package
+    metadata must tell the same story after the rewrite.
+  - **Reversibility:** reversible.
 
-### D-35: Bilingual GUI English/Spanish (PRES-05) — added 2026-10-23
-- **Decision:** string catalog (`en`/`es`) + `t("key")` lookups; language
-  auto-detected from the OS locale on start (`locale.getdefaultlocale()` with
-  a safe non-English fallback to Spanish); an in-app EN/ES switch rebuilds the
-  UI immediately; selection is not persisted across runs (keep it simple —
-  persistence is deferred).
-- Scope of translation: GUI strings (title, labels, buttons, messages),
-  message dialogs and the status line. CLI help stays Spanish-first with
-  English epilog (full CLI i18n deferred — Typer ecosystem cost).
-- **Reversibility:** reversible — catalog + wrappers only, no logic changes.
+- **D-35:** Bilingual GUI English/Spanish (PRES-05) — string catalog (`en`/`es`) + `t("key")` lookups; language auto-detected from the OS locale on start (non-English fallback to Spanish); an in-app EN/ES switch rebuilds the UI immediately; selection is not persisted across runs. CLI help stays Spanish-first (full CLI i18n deferred).
+  - **Decision:** string catalog (`en`/`es`) + `t("key")` lookups; language
+    auto-detected from the OS locale on start (`locale.getdefaultlocale()` with
+    a safe non-English fallback to Spanish); an in-app EN/ES switch rebuilds the
+    UI immediately; selection is not persisted across runs (keep it simple —
+    persistence is deferred).
+  - Scope of translation: GUI strings (title, labels, buttons, messages),
+    message dialogs and the status line. CLI help stays Spanish-first with
+    English epilog (full CLI i18n deferred — Typer ecosystem cost).
+  - **Reversibility:** reversible — catalog + wrappers only, no logic changes.
 
-### D-36: Studio signature "Hecho por JMW Studio" (PRES-06) — added 2026-10-23
-- **Decision:** signature shown as a small credit line in the GUI (under the
-  logo/subtitle area), in the READMEs (EN: "Made by JMW Studio"; ES: "Hecho
-  por JMW Studio"), in packaging metadata (`Maintainer: JMW Studio` in the
-  .deb control and .rpm spec) and in the CLI `--version` output footer.
-- **Reversibility:** reversible — copy only.
+- **D-36:** Studio signature "Hecho por JMW Studio" (PRES-06) — signature shown as a small credit line in the GUI (under the logo/subtitle area), in the READMEs (EN: "Made by JMW Studio"; ES: "Hecho por JMW Studio"), in packaging metadata (`Maintainer: JMW Studio` in the .deb control and .rpm spec) and in the CLI `--version` output footer.
+  - **Decision:** signature shown as a small credit line in the GUI (under the
+    logo/subtitle area), in the READMEs (EN: "Made by JMW Studio"; ES: "Hecho
+    por JMW Studio"), in packaging metadata (`Maintainer: JMW Studio` in the
+    .deb control and .rpm spec) and in the CLI `--version` output footer.
+  - **Reversibility:** reversible — copy only.
 
 ### Numbering (user-approved)
 - New phase inserted as **Phase 3**; previous pending phases renumbered:
