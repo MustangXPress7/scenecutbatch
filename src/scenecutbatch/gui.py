@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import sys
 import threading
 import tkinter as tk
@@ -12,6 +11,7 @@ from typing import Optional
 
 from .core.batch import detect_folder
 from .core.models import DetectConfig
+from .i18n import SUPPORTED_LANGUAGES, current_language, detect_language, set_language, t
 
 
 def _asset_path(name: str) -> Path:
@@ -37,11 +37,16 @@ class SceneCutBatchGUI(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
 
-        self.title("Scene Cut Batch — Detección de cortes de escena")
-        self.geometry("700x520")
-        self.minsize(650, 450)
+        # Auto-detect OS language before building the UI (D-35).
+        self._lang = detect_language()
+        set_language(self._lang)
 
-        # Variables de estado
+        self.title(t("window.title"))
+        self.geometry("880x740")
+        self.minsize(820, 700)
+
+        # Variables de estado — created once in __init__ so they survive
+        # the language-switch rebuild (never moved into _build_ui).
         self.input_dir = tk.StringVar(value="")
         self.output_dir = tk.StringVar(value="")
         self.threshold = tk.DoubleVar(value=27.0)
@@ -51,6 +56,10 @@ class SceneCutBatchGUI(tk.Tk):
         self.json_progress = tk.BooleanVar(value=False)
         self.confidence = tk.BooleanVar(value=False)
         self.is_running = False
+
+        self._container: Optional[ttk.Frame] = None
+        self._icon_image = None
+        self._logo_image = None
 
         self._set_window_icon()
         self._build_ui()
@@ -67,46 +76,88 @@ class SceneCutBatchGUI(tk.Tk):
                 pass
 
     # ------------------------------------------------------------------ #
-    # Construcción de la interfaz
+    # Construcción de la interfaz (idempotente)
     # ------------------------------------------------------------------ #
 
     def _build_ui(self) -> None:
-        container = ttk.Frame(self, padding="12")
-        container.pack(fill=tk.BOTH, expand=True)
+        """Build (or rebuild) the whole interface. Safe to call repeatedly."""
+        # Destroy previous container on rebuild so the interface never stacks.
+        if self._container is not None:
+            self._container.destroy()
 
-        # --- Logo ---
+        self._container = ttk.Frame(self, padding="12")
+        self._container.pack(fill=tk.BOTH, expand=True)
+
+        # --- Horizontal header: logo left, title/subtitle/signature right ---
+        header = ttk.Frame(self._container)
+        header.pack(fill=tk.X, pady=(0, 12))
+
         logo_path = _asset_path("assets/logo.png")
         if logo_path.exists():
             try:
                 logo_img = tk.PhotoImage(file=str(logo_path))
-                # Escalar si es demasiado grande (máx 200 px de ancho)
-                if logo_img.width() > 200:
-                    ratio = max(1, logo_img.width() // 200)
+                # Escalar a ~96 px de ancho para la cabecera
+                if logo_img.width() > 96:
+                    ratio = max(1, logo_img.width() // 96)
                     logo_img = logo_img.subsample(ratio, ratio)
-                logo_label = ttk.Label(container, image=logo_img)
+                logo_label = ttk.Label(header, image=logo_img)
                 logo_label.image = logo_img  # mantener referencia para evitar GC
-                logo_label.pack(pady=(0, 10))
+                self._logo_image = logo_img
+                logo_label.pack(side=tk.LEFT, padx=(0, 12))
             except tk.TclError:
                 pass  # Si no se puede cargar la imagen, se omite silenciosamente
 
-        # Título
+        # Right-hand block: title, subtitle, signature, language switch
+        text_block = ttk.Frame(header)
+        text_block.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
         title = ttk.Label(
-            container,
-            text="Scene Cut Batch",
+            text_block,
+            text=t("window.title"),
             font=("Segoe UI", 16, "bold"),
         )
-        title.pack(pady=(0, 8))
+        title.pack(anchor="w")
 
         subtitle = ttk.Label(
-            container,
-            text="Detecta cortes de escena y genera XML para Premiere Pro",
+            text_block,
+            text=t("app.subtitle"),
             font=("Segoe UI", 10),
             foreground="#555555",
         )
-        subtitle.pack(pady=(0, 16))
+        subtitle.pack(anchor="w", pady=(2, 0))
+
+        signature = ttk.Label(
+            text_block,
+            text=t("signature"),
+            font=("Segoe UI", 8),
+            foreground="#555555",
+        )
+        signature.pack(anchor="w", pady=(4, 0))
+
+        # Language switch (D-35): seeded from current_language, rebuilds on change.
+        lang_frame = ttk.Frame(text_block)
+        lang_frame.pack(anchor="w", pady=(8, 0))
+
+        ttk.Label(
+            lang_frame,
+            text=t("lang.label"),
+            font=("Segoe UI", 9),
+        ).pack(side=tk.LEFT, padx=(0, 6))
+
+        _lang_values = ["English", "Español"]
+        _current_value = _lang_values[0] if current_language() == "en" else _lang_values[1]
+        lang_combo = ttk.Combobox(
+            lang_frame,
+            values=_lang_values,
+            state="readonly",
+            width=9,
+        )
+        lang_combo.set(_current_value)
+        lang_combo.pack(side=tk.LEFT)
+        lang_combo.bind("<<ComboboxSelected>>", lambda _e: self._on_language_change(lang_combo.get()))
 
         # --- Carpeta de entrada ---------------------------------------
-        row = ttk.Frame(container)
+        row = ttk.Frame(self._container)
         row.pack(fill=tk.X, pady=4)
         ttk.Label(row, text="Carpeta de videos:", width=18).pack(side=tk.LEFT)
         ttk.Entry(row, textvariable=self.input_dir, width=50).pack(
@@ -117,7 +168,7 @@ class SceneCutBatchGUI(tk.Tk):
         )
 
         # --- Carpeta de salida ----------------------------------------
-        row = ttk.Frame(container)
+        row = ttk.Frame(self._container)
         row.pack(fill=tk.X, pady=4)
         ttk.Label(row, text="Carpeta de salida:", width=18).pack(side=tk.LEFT)
         ttk.Entry(row, textvariable=self.output_dir, width=50).pack(
@@ -128,7 +179,7 @@ class SceneCutBatchGUI(tk.Tk):
         )
 
         # --- Opciones de detección ------------------------------------
-        opts = ttk.LabelFrame(container, text="Opciones de detección", padding="10")
+        opts = ttk.LabelFrame(self._container, text="Opciones de detección", padding="10")
         opts.pack(fill=tk.X, pady=8)
 
         row = ttk.Frame(opts)
@@ -166,7 +217,7 @@ class SceneCutBatchGUI(tk.Tk):
         ).pack(side=tk.LEFT, padx=(20, 0))
 
         # --- Botón ejecutar -------------------------------------------
-        btn_frame = ttk.Frame(container)
+        btn_frame = ttk.Frame(self._container)
         btn_frame.pack(pady=12)
         self.btn_run = ttk.Button(
             btn_frame, text="Ejecutar detección", command=self._on_run, width=22
@@ -174,23 +225,30 @@ class SceneCutBatchGUI(tk.Tk):
         self.btn_run.pack()
 
         # --- Barra de progreso ----------------------------------------
-        self.progress = ttk.Progressbar(container, mode="indeterminate")
+        self.progress = ttk.Progressbar(self._container, mode="indeterminate")
         self.progress.pack(fill=tk.X, pady=(4, 0))
 
         # --- Log ------------------------------------------------------
-        ttk.Label(container, text="Salida:", anchor="w").pack(
+        ttk.Label(self._container, text="Salida:", anchor="w").pack(
             fill=tk.X, pady=(10, 2)
         )
-        self.log = scrolledtext.ScrolledText(container, height=12, wrap=tk.WORD)
+        self.log = scrolledtext.ScrolledText(self._container, height=12, wrap=tk.WORD)
         self.log.pack(fill=tk.BOTH, expand=True)
 
         # Estado
-        self.status = ttk.Label(container, text="Listo", anchor="w")
+        self.status = ttk.Label(self._container, text="Listo", anchor="w")
         self.status.pack(fill=tk.X, pady=(6, 0))
 
     # ------------------------------------------------------------------ #
     # Callbacks
     # ------------------------------------------------------------------ #
+
+    def _on_language_change(self, value: str) -> None:
+        """Switch language and rebuild the UI immediately (D-35)."""
+        code = "en" if value == "English" else "es"
+        set_language(code)
+        self._lang = code
+        self._build_ui()
 
     def _browse_input(self) -> None:
         d = filedialog.askdirectory(title="Seleccionar carpeta de videos")
