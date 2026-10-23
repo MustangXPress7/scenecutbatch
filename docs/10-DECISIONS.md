@@ -2,15 +2,15 @@
 
 | # | Decision | Rationale |
 |---|----------|-----------|
-| 1 | Independent project now, native tool inside EsqueletoEdit later | Validate in isolation, then integrate into the unified platform |
-| 2 | Final home is EsqueletoEdit (no separate "unified tool" planned) | EsqueletoEdit IS the unified local AI editing platform |
+| 1 | Built and usable as a standalone tool; no dependency on any other application | Validate the detector in isolation before any integration |
+| 2 | Standalone product (no unified tool planned) | SceneCutBatch builds and runs alone; other tools consume its documented API when they choose to |
 | 3 | PySceneDetect ContentDetector, threshold 27.0 default | Proven, classical CV, no ML deps |
-| 4 | FCP7 XML (xmeml) output | Premiere-native import, virtual subclips |
+| 4 | FCP7 XML (xmeml) output | Editor-agnostic import; virtual subclips reference original media |
 | 5 | No media duplication | Editor trust + storage |
-| 6 | Python 3.10+, Typer CLI | Consistency with EsqueletoEdit |
+| 6 | Python 3.10+, Typer CLI | Typed CLI with eager --version callback; stdlib-friendly |
 | 7 | Local-first, no cloud | Privacy, offline editing environments |
 | 8 | Confidence off by default | Keep v1 simple; add in v1.1 |
-| 9 | Apache-2.0 | Consistency with EsqueletoEdit |
+| 9 | Apache-2.0 | Permissive, business-friendly open-source license |
 | 10 | Error isolation per clip | Batch robustness |
 | 11 | Frame math via `fractions.Fraction` | Exact (NTSC) |
 

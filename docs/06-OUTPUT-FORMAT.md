@@ -2,7 +2,7 @@
 
 ## Goal
 
-Produce an FCP7 XML (xmeml) that Premiere Pro imports into a bin containing:
+Produce an FCP7 XML (xmeml) that professional video editors import into a bin containing:
 
 1. A **master sequence** with all detected cuts in timeline order.
 2. **Virtual subclips** — one per detected scene — that reference the original
@@ -62,14 +62,13 @@ Produce an FCP7 XML (xmeml) that Premiere Pro imports into a bin containing:
 
 ## Implementation notes
 
-- Prefer reusing EsqueletoEdit's `export/fcp7xml_exporter.py` (otio-fcp-adapter)
-  if it can express virtual subclips. Otherwise build xmeml directly with
-  `xml.etree.ElementTree` for full control.
+- Build xmeml directly with stdlib `xml.etree.ElementTree`: no third-party XML
+  dependency, and exact control of the virtual-subclip form.
 - Frame-accurate: use rational timebase; handle NTSC (23.976, 29.97) via
   `<ntsc>TRUE</ntsc>` + timebase 24/30.
 - `pathurl` must be `file://localhost/` + absolute path with forward slashes.
-- Test import manually in Premiere Pro (smoke test) before declaring Phase 2 done.
-- Keep a golden-file test (like EsqueletoEdit's `tests/golden/`).
+- Test import manually in any FCP7-capable editor (smoke test) before declaring Phase 2 done.
+- Keep a golden-file test under `tests/` for the xmeml output.
 
 ## EDL (v2)
 

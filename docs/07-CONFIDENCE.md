@@ -21,7 +21,7 @@ if end_frame - start_frame <= min_scene_len + 2: conf *= 0.8
 - YELLOW 0.60–0.84
 - RED < 0.60
 
-Consistent with EsqueletoEdit thresholds (GREEN ≥ 0.85, YELLOW 0.60–0.84, RED < 0.60).
+G/Y/R bands are fixed for v1: GREEN >= 0.85, YELLOW 0.60–0.84, RED < 0.60.
 
 ## Embedding in XML
 
@@ -30,8 +30,7 @@ Add `<marker>` to the subclip (or master sequence) with:
 - `<comment>` = `score=0.92;dur=1.2s`
 - `<in>`/`<out>` = scene range
 
-Premiere displays markers with color if `<color>` supported; otherwise rely on
-name prefix.
+Professional video editors display markers with color when `<color>` is supported; otherwise rely on the marker label.
 
 ## When to enable
 

@@ -22,7 +22,7 @@
 - Filter by supported extensions (case-insensitive).
 - Probe each file with ffprobe to get duration, fps, resolution, codec.
 - Skip unreadable files with a warning (do not crash).
-- Reuse EsqueletoEdit's `media/scanner.py` and `media/models.py` patterns.
+- Media scanner/layout follows this project's own module conventions.
 
 ### 2. Detector (`detection/detector.py`)
 - Wrap `scenedetect` (PySceneDetect).
@@ -44,8 +44,8 @@
   - One `<clip>`/`<subclip>` per detected scene referencing original media
     (`<file>` with `<pathurl>`).
   - Optional `<marker>` elements for confidence.
-- Use `pathurl` `file://localhost/...` form (Premiere-compatible).
-- Frame-accurate via rational timebase (reuse EsqueletoEdit's Fraction approach).
+- Use `pathurl` `file://localhost/...` form (FCP7 xmeml convention).
+- Frame-accurate via rational timebase (`fractions.Fraction`, exact for NTSC 24000/1001 etc.).
 
 ### 5. Confidence scorer (`confidence/scorer.py`) — optional
 - Score per scene from detection score + duration + min-length proximity.
@@ -53,13 +53,13 @@
 - Inject markers into XML.
 
 ### 6. CLI (`cli.py`)
-- Typer, consistent with EsqueletoEdit.
+- Typer, chosen for its typed CLI shape and eager `--version` callback.
 - Flags: `--input`, `--out-dir`, `--threshold`, `--min-scene-len`,
   `--recursive`, `--dry-run`, `--json-progress`, `--config`.
 - Exit codes: 0 success, 1 usage, 2 validation, 3 processing error, 4 export error.
 
 ### 7. Optional GUI (`gui.py`)
-- Gradio, consistent with EsqueletoEdit (v1.1, optional).
+- Gradio, optional desktop GUI (v1.1).
 
 ## Data flow
 
@@ -70,15 +70,13 @@ folder -> scanner -> [clip paths] -> batch runner
   -> progress callback -> stdout/json
 ```
 
-## Reusable from EsqueletoEdit
+## Design decisions and reuse within this project
 
-- `media/scanner.py`, `media/models.py`, `media/validator.py`
-- `export/fcp7xml_exporter.py` patterns (FCP7 XML via otio-fcp-adapter) — but
-  note: this project needs *virtual subclips referencing original media*, which
-  the EsqueletoEdit exporter (timeline clips with source ranges) already
-  approximates. Evaluate reusing `otio_builder` + `fcp7xml_exporter` directly.
-- `progress.py` SSE/JSON progress.
-- Pinokio recipe + Nuitka build scripts.
+- Virtual subclips reference original media (no duplication), built from the
+  same scanner, detector and XML builder used by the CLI.
+- JSON progress callback (`docs/04`) drives CLI and GUI progress reporting.
+- Packaging is PyInstaller one-folder plus one-file, with assets bundled next
+  to the executable.
 
 ## Design rules
 
