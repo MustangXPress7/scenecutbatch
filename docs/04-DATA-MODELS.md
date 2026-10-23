@@ -72,4 +72,4 @@ class DetectConfig:
 ```
 
 Events: `start`, `clip_start`, `clip_done`, `clip_error`, `done`.
-Consistent with EsqueletoEdit progress schema where possible.
+The progress schema is versioned and its fields are stable across v1; consumers should not rely on undocumented fields.

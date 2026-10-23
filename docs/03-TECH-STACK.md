@@ -2,16 +2,16 @@
 
 | Concern | Choice | Notes |
 |---------|--------|-------|
-| Language | Python 3.10+ | Consistent with EsqueletoEdit |
+| Language | Python 3.10+ | modern typing, wide adoption |
 | Cut detection | PySceneDetect 0.6.x (`scenedetect[opencv]`) | ContentDetector |
 | Video I/O | OpenCV (via PySceneDetect) | |
-| Media probing | ffprobe (ffmpeg) | JSON output, reuse EsqueletoEdit pattern |
+| Media probing | ffprobe (ffmpeg) | JSON output, parsed in-process |
 | Frame math | `fractions.Fraction` | Exact rational (24000/1001 etc.) |
-| XML | stdlib `xml.etree.ElementTree` or `lxml` | FCP7 xmeml; validate with Premiere |
-| CLI | Typer | Consistent with EsqueletoEdit |
+| XML | stdlib `xml.etree.ElementTree` or `lxml` | FCP7 xmeml v5; validate by importing into a professional video editor |
+| CLI | Typer | modern typing, wide adoption |
 | GUI (opt) | Gradio | v1.1 |
-| Progress | JSON to stdout/file | EsqueletoEdit-compatible |
-| Packaging | Pinokio + Nuitka/PyInstaller | Reuse EsqueletoEdit scripts |
+| Progress | JSON to stdout/file | JSON progress schema, documented standalone |
+| Packaging | Pinokio + Nuitka/PyInstaller | PyInstaller one-folder plus one-file |
 | Tests | pytest | |
 | License | Apache-2.0 | |
 

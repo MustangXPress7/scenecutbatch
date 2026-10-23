@@ -6,7 +6,7 @@
 scenecutbatch detect INPUT_DIR [OPTIONS]
 ```
 
-(If single command, use Typer `@app.callback()` pattern like EsqueletoEdit.)
+(Single `detect` command; `--version` is eager.)
 
 ## Options
 
