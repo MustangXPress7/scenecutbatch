@@ -1,73 +1,69 @@
 ---
 gsd_state_version: "1.0"
-status: complete
-stopped_at: Phase 02 complete — all plans executed + logo in GUI + release zip Windows, VERIFICATION.md written
-last_updated: "2026-10-22T03:00:00.000Z"
-state_head: a6f5f75efe997d69f1bf1aa07d209c8cfb8175bc
+status: ready
+stopped_at: Phase 03 created (UI polish & public-facing presentation) — context gathered, awaiting /gsd-plan-phase 3
+last_updated: "2026-10-23T10:05:00.000Z"
+state_head: afc23a2
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 2
-  total_plans: 4
-  completed_plans: 4
-  percent: 100
-current_phase_name: scene-cut-batch
-current_plan: 02-04
+  total_plans: 9
+  completed_plans: 9
+  percent: 33
+current_phase_name: ui-polish-presentation
+current_plan: null
 ---
+
+Total Phases: 6 (3 pending: 03 UI polish, 04 Confidence, 05 Packaging, 06 Integration)
 
 # Project State — SceneCutBatch
 
 ## Project Reference
 
 **Core Value**: Batch scene-cut detection across folders of clips, emitting
-Premiere-importable FCP7 XML with virtual subclips.
+FCP7 XML with virtual subclips, importable by professional video editors.
 
-**Current Focus**: Phase 02 (scene-cut-batch) complete — launch prep & multi-platform distribution delivered.
+**Current Focus**: Phase 03 (ui-polish-presentation) created — GUI layout rework, neutral NLE terminology, public copy review. Prior phases 3-5 renumbered to 4-6 on 2026-10-23.
 
 ## Current Position
 
 | Field | Value |
 |-------|-------|
 | **Milestone** | v1.0 — Standalone cut detector |
-| **Active Phase** | None (Phase 02 complete) |
-| **Progress** | 100% |
+| **Active Phase** | Phase 03 (pending planning) |
+| **Progress** | 33% (2 of 6 phases) |
 
 ## Next Action
 
-Phase 02 complete. Next: user pushes code to GitHub (https://github.com/MustangXPress7/scenecutbatch), completes macOS/Linux manual testing, then `/gsd-plan-phase 3` for Phase 3 (Confidence scoring + markers). Note: the former "Phase 3 — CLI + progress reporting + config" was removed after review — its scope (requirements UX-01..04) was delivered and verified inside Phase 1, so no separate phase was warranted.
+Run `/gsd-plan-phase 3` (or `/gsd-execute-phase` after planning) to deliver:
+GUI layout rework (logo no longer clips the interface — PRES-01), neutral
+editor-agnostic terminology (PRES-02), removal of internal-development
+references everywhere including docs/ (PRES-03), cross-surface consistency
+(PRES-04). Context: `.planning/phases/03-ui-polish-presentation/03-CONTEXT.md`.
+
+## Release State (as of v0.1.0, 2026-10-22)
+
+| Platform | Artifacts | Status |
+|----------|-----------|--------|
+| Windows | `SceneCutBatch-0.1.0-Windows.zip` | Published (CI build green) |
+| macOS | portable zip + `.app` bundle | Published (CI build green) |
+| Linux | portable zip + `.deb` + AppImage | Published (CI build green) |
+
+- Logo verified in GUI (in-window + taskbar icon) on Windows.
+- New releases: push a tag (`git tag vX.Y.Z && git push origin vX.Y.Z`);
+  `.github/workflows/release.yml` builds and publishes automatically.
+- CI red: `test_xml_builder.py::test_build_xml_contains_master_and_subclips`
+  expects `<sequence>` while `build_xml()` emits `<clip explodedTracks="true">`
+  — pre-existing since Phase 1, documented, unrelated to detection output.
 
 ## Notes
 
 - Promoted from EsqueletoEdit seed SEED-261012-001.
-- No code yet; docs + scaffold only.
-- Shares tech stack and conventions with EsqueletoEdit; see
-  `docs/09-INTEGRATION-WITH-ESQUELETOEDIT.md`.
-
-## Cross-Platform Test Results (Plan 02-04)
-
-| Platform | Installer | Executable | Detection Test | XML Output | Status |
-|----------|-----------|------------|----------------|------------|--------|
-| Windows | install.bat | dist/scenecutbatch.exe (70MB, --version returns 0.1.0) | Not yet run | Not yet run | Verified files present |
-| macOS | install.sh, SceneCutBatch.command | Not built on this host | Not yet run | Not yet run | Files present, manual test needed |
-| Linux | install_linux.sh | Not built on this host | Not yet run | Not yet run | Script created, manual test needed |
-
-**Windows verification:** `dist/scenecutbatch.exe --version` → `0.1.0` (PASS)
-
-**macOS/Linux:** Requires testing on respective platforms. Installers and scripts are present.
-
-## Additional Phase 2 Enhancements (Logo + Releases)
-
-| Enhancement | File | Status |
-|-------------|------|--------|
-| Logo in GUI (Tkinter) | `src/scenecutbatch/gui.py` | Complete — logo shown above window title |
-| Release packaging script | `scripts/make_release.py` | Complete — generates .zip per platform |
-| Windows release zip | `releases/SceneCutBatch-0.1.0-Windows.zip` | Complete — includes .exe, scripts, assets, source |
-| PyInstaller spec updated | `scenecutbatch.spec` | Complete — `assets/logo.png` added to datas |
-
-**To generate macOS/Linux releases:** run `python scripts/make_release.py --version 0.1.0 --platform macos` (on macOS host) and `--platform linux` (on Linux host).
-
+- Shares tech stack and conventions with EsqueletoEdit (public copy about this
+  is being removed in Phase 03; the plan itself remains in Phase 06).
 
 ## Session
 
-**Last session:** 2026-10-22T03:00:00.000Z
-**Stopped at:** Phase 02 complete — all 4 plans + logo in GUI + Windows release zip completed, VERIFICATION.md written
-**Resume file:** .planning/phases/02-scene-cut-batch/02-CONTEXT.md
+**Last session:** 2026-10-23T10:05:00.000Z
+**Stopped at:** Phase 03 created with CONTEXT.md; awaiting planning
+**Resume file:** .planning/phases/03-ui-polish-presentation/03-CONTEXT.md

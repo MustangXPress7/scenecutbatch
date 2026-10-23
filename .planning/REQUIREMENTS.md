@@ -21,9 +21,21 @@
   timeline order.
 - **OUT-04**: Each XML contains virtual subclips (one per detected scene) that
   reference the original media (no duplication).
-- **OUT-05**: Premiere Pro imports the XML without errors and creates a bin with
+- **OUT-05**: A professional video editor that reads FCP7 XML (Premiere Pro,
+  DaVinci Resolve, ...) imports the XML without errors and creates a bin with
   master sequence + subclips.
 - **OUT-06**: (Optional, v1.1) Export EDL in addition to FCP XML.
+
+### Presentation (Phase 3 — UI polish & public copy)
+- **PRES-01**: The GUI shows its complete interface (all controls, log, status)
+  without clipping at the default window size, with the logo present.
+- **PRES-02**: All user-facing copy uses editor-agnostic terminology: FCP7 XML
+  importable by professional video editors. No Premiere-Pro-exclusive claims.
+- **PRES-03**: No internal-development references (EsqueletoEdit, parent
+  ecosystem, integration plans, internal phase status) in any repository text:
+  code, READMEs, docs/, packaging metadata, GUI/CLI copy.
+- **PRES-04**: Terminology and messaging consistent across GUI, CLI, READMEs,
+  pyproject and package metadata (.deb/.rpm/.desktop).
 
 ### Progress & UX
 - **UX-01**: Report progress per clip (index/total, clip name, ETA) to stdout
@@ -37,7 +49,8 @@
 - **CONF-01**: Compute a per-scene confidence score from detection score + scene
   duration + min-length proximity.
 - **CONF-02**: Map score to Green (>=0.85) / Yellow (0.60-0.84) / Red (<0.60).
-- **CONF-03**: Embed markers in XML with color + label so Premiere shows them.
+- **CONF-03**: Embed markers in XML with color + label so professional video
+  editors display them.
 
 ### Packaging
 - **PKG-01**: Pinokio one-click recipe (consistent with EsqueletoEdit).
@@ -69,8 +82,9 @@
 |-----|-------|--------|
 | CUT-01..05 | Phase 1 | Complete |
 | OUT-01..04 | Phase 1 | Complete |
-| OUT-05 | Phase 2 | Pending (manual Premiere smoke test) |
+| OUT-05 | Phase 2 | Pending (manual NLE smoke test) |
 | UX-01..04 | Phase 1 | Complete |
-| CONF-01..03 | Phase 3 | Pending |
-| PKG-01..03 | Phase 4 | Pending |
-| INT-01..02 | Phase 5 | Pending |
+| PRES-01..04 | Phase 3 | Pending |
+| CONF-01..03 | Phase 4 | Pending |
+| PKG-01..03 | Phase 5 | Pending |
+| INT-01..02 | Phase 6 | Pending |
