@@ -83,81 +83,26 @@ jobs:
             ./dist/scenecutbatch --version
           fi
 
-      - name: Package portable zip
+      - name: Prepare Windows executable for release
+        if: ${{ runner.os == 'Windows' }}
         shell: bash
         run: |
-          python scripts/make_release.py \
-            --version "${{ steps.version.outputs.VERSION }}" \
-            --platform "${{ matrix.platform }}"
-
-      - name: Package .deb (Linux)
-        if: ${{ runner.os == 'Linux' }}
-        run: |
           set -euo pipefail
           VER="${{ steps.version.outputs.VERSION }}"
-          mkdir -p packaging/debian/usr/lib/python3/dist-packages
-          cp -r src/scenecutbatch packaging/debian/usr/lib/python3/dist-packages/
-          find packaging/debian/usr/lib -name '__pycache__' -type d -prune -exec rm -rf {} +
-          sed -i "s/^Version: .*/Version: ${VER}/" packaging/debian/DEBIAN/control
-          chmod 755 packaging/debian/DEBIAN/postinst packaging/debian/usr/bin/scenecutbatch
-          dpkg-deb --build packaging/debian "releases/SceneCutBatch-${VER}-Linux-x86_64.deb"
-
-      - name: Package AppImage (Linux)
-        if: ${{ runner.os == 'Linux' }}
-        run: |
-          set -euo pipefail
-          chmod +x packaging/appimage/build_appimage.sh
-          ARCH=x86_64 APPIMAGE_EXTRACT_AND_RUN=1 \
-            packaging/appimage/build_appimage.sh \
-            "${{ steps.version.outputs.VERSION }}" dist/scenecutbatch
-
-      - name: Package .app bundle (macOS)
-        if: ${{ runner.os == 'macOS' }}
-        run: |
-          set -euo pipefail
-          VER="${{ steps.version.outputs.VERSION }}"
-          APP="SceneCutBatch.app"
-          mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" releases
-          cp dist/scenecutbatch "$APP/Contents/MacOS/scenecutbatch"
-          cp assets/logo.png "$APP/Contents/Resources/logo.png"
-          # icono .icns via iconset + iconutil (sips -s format icns no es fiable)
-          ICONSET="logo.iconset"
-          mkdir -p "$ICONSET"
-          for s in 16 32 128 256 512; do
-            sips -z $s $s assets/logo.png --out "$ICONSET/icon_${s}x${s}.png" >/dev/null
-          done
-          sips -z 32 32 assets/logo.png --out "$ICONSET/icon_16x16@2x.png" >/dev/null
-          sips -z 64 64 assets/logo.png --out "$ICONSET/icon_32x32@2x.png" >/dev/null
-          sips -z 256 256 assets/logo.png --out "$ICONSET/icon_128x128@2x.png" >/dev/null
-          sips -z 512 512 assets/logo.png --out "$ICONSET/icon_256x256@2x.png" >/dev/null
-          iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/scenecutbatch.icns"
-          cat > "$APP/Contents/Info.plist" <<PLIST
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>CFBundleName</key><string>SceneCutBatch</string>
-            <key>CFBundleDisplayName</key><string>Scene Cut Batch</string>
-            <key>CFBundleIdentifier</key><string>com.scenecutbatch.app</string>
-            <key>CFBundleVersion</key><string>${VER}</string>
-            <key>CFBundleShortVersionString</key><string>${VER}</string>
-            <key>CFBundleExecutable</key><string>scenecutbatch</string>
-            <key>CFBundleIconFile</key><string>scenecutbatch.icns</string>
-          </dict>
-          </plist>
-          PLIST
-          ditto -c -k --sequesterRsrc --keepParent "$APP" "releases/SceneCutBatch-${VER}-macOS-AppBundle.zip"
-          echo "Bundle macOS creado: releases/SceneCutBatch-${VER}-macOS-AppBundle.zip"
+          mkdir -p releases
+          cp dist/scenecutbatch.exe "releases/scenecutbatch-${VER}-windows-x86_64.exe"
+          ( cd releases && sha256sum "scenecutbatch-${VER}-windows-x86_64.exe" > "scenecutbatch-${VER}-windows-x86_64.exe.sha256" )
+          echo "Windows executable preparado: releases/scenecutbatch-${VER}-windows-x86_64.exe"
           ls -la releases/
 
       - name: Upload release artifacts
+        if: ${{ runner.os == 'Windows' }}
         uses: actions/upload-artifact@v4
         with:
-          name: "SceneCutBatch-${{ steps.version.outputs.VERSION }}-${{ matrix.platform }}"
+          name: "SceneCutBatch-${{ steps.version.outputs.VERSION }}-windows"
           path: |
-            releases/*.zip
-            releases/*.deb
-            releases/*.AppImage
+            releases/*.exe
+            releases/*.sha256
           if-no-files-found: error
 
   publish:
