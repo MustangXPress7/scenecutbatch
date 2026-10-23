@@ -107,6 +107,17 @@ distribution on macOS.)
 with embedded sizes 16, 32, 48, 64, 128, 256 px. The `.exe` embeds this icon for the Windows
 taskbar/window titlebar.
 
+**D-40: Pipeline CI para macOS.** `.github/workflows/release.yml` incluye ahora un job
+`macos-latest` que compila con PyInstaller, empaqueta el ejecutable como
+`SceneCutBatch.app` dentro de un `.app.zip` (formato esperado por la fórmula de Homebrew),
+genera su checksum `.sha256` y lo sube como artifact de GitHub Actions. Se ejecuta en
+parallel con el job de Windows cuando se pushea un tag `v*`.
+
+**D-41: Publicación de release con macOS.** Al pushear un tag `vX.Y.Z`, el pipeline de
+GitHub Actions compila Windows (`.exe` + `.sha256`) y macOS (`.app.zip` + `.sha256`) y
+publica ambos como assets del GitHub Release. Los usuarios de macOS instalan luego vía
+Homebrew tap descargando el `.app.zip` del release.
+
 ## Instalación en macOS (Homebrew)
 
 macOS se distribuye exclusivamente vía Homebrew tap, no como binario suelto en releases.
@@ -121,13 +132,20 @@ los releases de este repositorio y lo instale.
 La fórmula borrador ya está preparada en este repositorio:
 `.planning/homebrew-tap/Formula/scenecutbatch.rb`
 
-Solo falta que alguien con acceso al repositorio `homebrew-tap` la copie a
-`Formula/scenecutbatch.rb` y actualice los valores `sha256` cuando se publique el
-primer binario de macOS como asset de un release.
+**Pasos pendientes para activar la instalación en Mac:**
+
+1. Subir `Formula/scenecutbatch.rb` al repositorio `https://github.com/MustangXPress7/homebrew-tap`
+   (tú debes hacerlo desde tu máquina, yo no tengo acceso a ese repositorio).
+2. Pushear un tag `v*` (ej. `v0.1.1`) a `https://github.com/MustangXPress7/scenecutbatch`
+   para que el pipeline de GitHub Actions compile y publique el binario de macOS.
+3. Cuando el binario de macOS esté publicado, actualizar los valores `sha256` en la
+   fórmula con los checksums reales del `.app.zip`.
 
 **Notas:**
-- Esta fórmula asume que un futuro pipeline de GitHub Actions compilará y subirá un binario de macOS como asset del release (por ejemplo `scenecutbatch-0.1.1-macos-x86_64.app.zip`). Hasta que ese binario exista, la fórmula es un esqueleto con `sha256 = "REVISAR_AL_PUBLICAR"`.
-- Mientras tanto, los usuarios de macOS pueden ejecutar desde código fuente: `python -m scenecutbatch` o `python -m scenecutbatch.gui`.
+- Mientras tanto, los usuarios de macOS pueden ejecutar desde código fuente:
+  `python -m scenecutbatch` o `python -m scenecutbatch.gui`.
+- La fórmula es un esqueleto con `sha256 = "REVISAR_AL_PUBLICAR"` hasta que exista el
+  primer binario de macOS publicado.
 
 ## Relationship to Other Tools
 
