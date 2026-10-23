@@ -107,6 +107,49 @@ distribution on macOS.)
 with embedded sizes 16, 32, 48, 64, 128, 256 px. The `.exe` embeds this icon for the Windows
 taskbar/window titlebar.
 
+## Instalación en macOS (Homebrew)
+
+macOS se distribuye exclusivamente vía Homebrew tap, no como binario suelto en releases.
+
+**¿Hace falta añadir algo al repositorio `homebrew-tap`?**
+
+Sí. Homebrew no descubre proyectos automáticamente: alguien debe crear una fórmula
+`Formula/scenecutbatch.rb` dentro de
+`https://github.com/MustangXPress7/homebrew-tap` que descargue el binario de macOS desde
+los releases de este repositorio y lo instale.
+
+Ejemplo de fórmula (pendiente de crear una vez haya un binario de macOS publicado):
+
+```ruby
+class Scenecutbatch < Formula
+  desc "Batch scene-cut detection that emits FCP7 XML importable by professional video editors"
+  homepage "https://github.com/MustangXPress7/scenecutbatch"
+  version "0.1.1"
+
+  if OS.mac?
+    if Hardware::CPU.arm?
+      url "https://github.com/MustangXPress7/scenecutbatch/releases/download/v0.1.1/scenecutbatch-0.1.1-macos-aarch64"
+      sha256 "REVISAR_AL_PUBLICAR"
+    else
+      url "https://github.com/MustangXPress7/scenecutbatch/releases/download/v0.1.1/scenecutbatch-0.1.1-macos-x86_64"
+      sha256 "REVISAR_AL_PUBLICAR"
+    end
+  end
+
+  def install
+    bin.install "scenecutbatch"
+  end
+
+  test do
+    system "#{bin}/scenecutbatch", "--version"
+  end
+end
+```
+
+**Notas:**
+- Esta fórmula asume que un futuro pipeline de GitHub Actions compilará y subirá un binario de macOS como asset del release (por ejemplo `scenecutbatch-0.1.1-macos-x86_64`). Hasta que ese binario exista, la fórmula es un esqueleto.
+- Mientras tanto, los usuarios de macOS pueden ejecutar desde código fuente: `python -m scenecutbatch` o `python -m scenecutbatch.gui`.
+
 
 ## Relationship to Other Tools
 
