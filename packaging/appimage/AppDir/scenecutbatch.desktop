@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Scene Cut Batch
-Comment=Batch scene-cut detection with FCP7 XML virtual subclips
+Comment=Batch scene-cut detection that emits FCP7 XML (xmeml) with virtual subclips, importable by professional video editors.
 Exec=scenecutbatch
 Icon=scenecutbatch
 Terminal=false

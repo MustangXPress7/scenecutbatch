@@ -4,8 +4,8 @@ Section: video
 Priority: optional
 Architecture: amd64
 Depends: python3 (>= 3.10), python3-pip, ffmpeg
-Maintainer: Scene Cut Batch <maintainer@scenecutbatch.com>
-Description: Batch scene-cut detection with FCP7 XML virtual subclips
+Maintainer: JMW Studio <maintainer@scenecutbatch.com>
+Description: Batch scene-cut detection that emits FCP7 XML (xmeml) with virtual subclips, importable by professional video editors.
  SceneCutBatch detects hard scene cuts across folders of video clips using
- PySceneDetect and emits FCP7 XML files with virtual
- subclips referencing the original media (no duplication).
+ PySceneDetect and emits FCP7 XML files with virtual subclips referencing the
+ original media (no duplication).

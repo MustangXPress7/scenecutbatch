@@ -1,8 +1,9 @@
 Name: scenecutbatch
 Version: 0.1.0
 Release: 1%{?dist}
-Summary: Batch scene-cut detection with FCP7 XML virtual subclips
+Summary: Batch scene-cut detection that emits FCP7 XML (xmeml) with virtual subclips, importable by professional video editors.
 License: Apache-2.0
+Packager: JMW Studio <maintainer@scenecutbatch.com>
 URL: https://github.com/MustangXPress7/scenecutbatch
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
@@ -12,9 +13,10 @@ Requires: python3-pip
 Requires: ffmpeg
 
 %description
-SceneCutBatch detects hard scene cuts across folders of video clips using
-PySceneDetect and emits FCP7 XML files with virtual
-subclips referencing the original media (no duplication).
+Batch scene-cut detection that emits FCP7 XML (xmeml) with virtual subclips, importable by professional video editors.
+ SceneCutBatch detects hard scene cuts across folders of video clips using
+ PySceneDetect and emits FCP7 XML files with virtual subclips referencing the
+ original media (no duplication).
 
 %prep
 %setup -q
@@ -46,5 +48,5 @@ find %{buildroot}/usr/lib -name '__pycache__' -type d -prune -exec rm -rf {} +
 /usr/lib/python3.10/dist-packages/scenecutbatch
 
 %changelog
-* Thu Oct 22 2026 Scene Cut Batch <maintainer@scenecutbatch.com> - 0.1.0-1
+* Thu Oct 22 2026 JMW Studio <maintainer@scenecutbatch.com> - 0.1.0-1
 - Initial RPM package for SceneCutBatch
