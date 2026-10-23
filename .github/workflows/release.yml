@@ -145,13 +145,26 @@ jobs:
           echo "macOS app bundle preparado: releases/scenecutbatch-${VER}-macos-${ARCH_SUFFIX}.app.zip"
           ls -la releases/
 
-      - name: Upload release artifacts (macOS)
-        if: ${{ runner.os == 'macOS' }}
+      - name: Prepare Linux executable for release
+        if: ${{ runner.os == 'Linux' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          VER="${{ steps.version.outputs.VERSION }}"
+          mkdir -p releases
+          cp dist/scenecutbatch "releases/scenecutbatch-${VER}-linux-x86_64"
+          chmod +x "releases/scenecutbatch-${VER}-linux-x86_64"
+          ( cd releases && sha256sum "scenecutbatch-${VER}-linux-x86_64" > "scenecutbatch-${VER}-linux-x86_64.sha256" )
+          echo "Linux executable preparado: releases/scenecutbatch-${VER}-linux-x86_64"
+          ls -la releases/
+
+      - name: Upload release artifacts (Linux)
+        if: ${{ runner.os == 'Linux' }}
         uses: actions/upload-artifact@v4
         with:
-          name: "SceneCutBatch-${{ steps.version.outputs.VERSION }}-macos"
+          name: "SceneCutBatch-${{ steps.version.outputs.VERSION }}-linux"
           path: |
-            releases/*.app.zip
+            releases/scenecutbatch-*-linux-x86_64
             releases/*.sha256
           if-no-files-found: error
 
@@ -172,5 +185,6 @@ jobs:
           files: |
             artifacts/*.exe
             artifacts/*.app.zip
+            artifacts/scenecutbatch-*-linux-x86_64
             artifacts/*.sha256
           generate_release_notes: true
