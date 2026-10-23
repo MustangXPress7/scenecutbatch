@@ -55,6 +55,24 @@ as delivered in Phases 1-2.
   metadata must tell the same story after the rewrite.
 - **Reversibility:** reversible.
 
+### D-35: Bilingual GUI English/Spanish (PRES-05) — added 2026-10-23
+- **Decision:** string catalog (`en`/`es`) + `t("key")` lookups; language
+  auto-detected from the OS locale on start (`locale.getdefaultlocale()` with
+  a safe non-English fallback to Spanish); an in-app EN/ES switch rebuilds the
+  UI immediately; selection is not persisted across runs (keep it simple —
+  persistence is deferred).
+- Scope of translation: GUI strings (title, labels, buttons, messages),
+  message dialogs and the status line. CLI help stays Spanish-first with
+  English epilog (full CLI i18n deferred — Typer ecosystem cost).
+- **Reversibility:** reversible — catalog + wrappers only, no logic changes.
+
+### D-36: Studio signature "Hecho por JMW Studio" (PRES-06) — added 2026-10-23
+- **Decision:** signature shown as a small credit line in the GUI (under the
+  logo/subtitle area), in the READMEs (EN: "Made by JMW Studio"; ES: "Hecho
+  por JMW Studio"), in packaging metadata (`Maintainer: JMW Studio` in the
+  .deb control and .rpm spec) and in the CLI `--version` output footer.
+- **Reversibility:** reversible — copy only.
+
 ### Numbering (user-approved)
 - New phase inserted as **Phase 3**; previous pending phases renumbered:
   Confidence 3→4, Packaging 4→5, Integration 5→6. REQUIREMENTS.md

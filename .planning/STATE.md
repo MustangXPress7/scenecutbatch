@@ -39,7 +39,10 @@ Run `/gsd-plan-phase 3` (or `/gsd-execute-phase` after planning) to deliver:
 GUI layout rework (logo no longer clips the interface — PRES-01), neutral
 editor-agnostic terminology (PRES-02), removal of internal-development
 references everywhere including docs/ (PRES-03), cross-surface consistency
-(PRES-04). Context: `.planning/phases/03-ui-polish-presentation/03-CONTEXT.md`.
+(PRES-04), bilingual EN/ES GUI with OS auto-detection + in-app switch
+(PRES-05) and the "Hecho por JMW Studio" signature across GUI/READMEs/CLI/
+package metadata (PRES-06). Context:
+`.planning/phases/03-ui-polish-presentation/03-CONTEXT.md`.
 
 ## Release State (as of v0.1.0, 2026-10-22)
 

@@ -45,6 +45,8 @@
 - **Neutral NLE terminology**: replace Premiere-Pro-exclusive claims ("for Adobe Premiere Pro", "imports directly into Premiere") with accurate, editor-agnostic phrasing: FCP7 XML (xmeml) importable by professional video editors (Premiere Pro, DaVinci Resolve and other NLEs that read FCP7 XML).
 - **Public copy review**: remove/neutralize internal-development references everywhere (EsqueletoEdit, "parent ecosystem", integration plans, phase-status text) in code, READMEs, docs/, packaging metadata and GUI/CLI copy.
 - **Consistency**: GUI, CLI (`--version`, help), READMEs, pyproject, .deb/.rpm/.desktop metadata all tell the same story.
+- **Bilingual GUI** (added 2026-10-23): English/Spanish with OS language auto-detection and in-app EN/ES switch — PRES-05.
+- **Studio signature** (added 2026-10-23): "Hecho por JMW Studio" in GUI, READMEs, CLI output and package metadata — PRES-06.
 
 ---
 

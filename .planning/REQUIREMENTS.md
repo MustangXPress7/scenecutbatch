@@ -36,6 +36,10 @@
   code, READMEs, docs/, packaging metadata, GUI/CLI copy.
 - **PRES-04**: Terminology and messaging consistent across GUI, CLI, READMEs,
   pyproject and package metadata (.deb/.rpm/.desktop).
+- **PRES-05**: The GUI is bilingual English/Spanish: auto-detects the OS
+  language on start and offers an in-app EN/ES switch that applies immediately.
+- **PRES-06**: Studio signature "Hecho por JMW Studio" present in the GUI, the
+  READMEs, the CLI about/output and package metadata (Maintainer).
 
 ### Progress & UX
 - **UX-01**: Report progress per clip (index/total, clip name, ETA) to stdout
@@ -84,7 +88,7 @@
 | OUT-01..04 | Phase 1 | Complete |
 | OUT-05 | Phase 2 | Pending (manual NLE smoke test) |
 | UX-01..04 | Phase 1 | Complete |
-| PRES-01..04 | Phase 3 | Pending |
+| PRES-01..06 | Phase 3 | Pending |
 | CONF-01..03 | Phase 4 | Pending |
 | PKG-01..03 | Phase 5 | Pending |
 | INT-01..02 | Phase 6 | Pending |
