@@ -168,6 +168,26 @@ jobs:
             releases/*.sha256
           if-no-files-found: error
 
+      - name: Upload release artifacts (Windows)
+        if: ${{ runner.os == 'Windows' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: "SceneCutBatch-${{ steps.version.outputs.VERSION }}-windows"
+          path: |
+            releases/scenecutbatch-*-windows-x86_64.exe
+            releases/*.sha256
+          if-no-files-found: error
+
+      - name: Upload release artifacts (macOS)
+        if: ${{ runner.os == 'macOS' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: "SceneCutBatch-${{ steps.version.outputs.VERSION }}-macos"
+          path: |
+            releases/scenecutbatch-*-macos-*.app.zip
+            releases/*.sha256
+          if-no-files-found: error
+
   publish:
     name: Publish GitHub Release
     needs: build
