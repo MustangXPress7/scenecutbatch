@@ -159,39 +159,39 @@ class SceneCutBatchGUI(tk.Tk):
         # --- Carpeta de entrada ---------------------------------------
         row = ttk.Frame(self._container)
         row.pack(fill=tk.X, pady=4)
-        ttk.Label(row, text="Carpeta de videos:", width=18).pack(side=tk.LEFT)
+        ttk.Label(row, text=t("form.input.label"), width=18).pack(side=tk.LEFT)
         ttk.Entry(row, textvariable=self.input_dir, width=50).pack(
             side=tk.LEFT, padx=(6, 6), fill=tk.X, expand=True
         )
-        ttk.Button(row, text="Examinar…", command=self._browse_input).pack(
+        ttk.Button(row, text=t("form.browse"), command=self._browse_input).pack(
             side=tk.LEFT
         )
 
         # --- Carpeta de salida ----------------------------------------
         row = ttk.Frame(self._container)
         row.pack(fill=tk.X, pady=4)
-        ttk.Label(row, text="Carpeta de salida:", width=18).pack(side=tk.LEFT)
+        ttk.Label(row, text=t("form.output.label"), width=18).pack(side=tk.LEFT)
         ttk.Entry(row, textvariable=self.output_dir, width=50).pack(
             side=tk.LEFT, padx=(6, 6), fill=tk.X, expand=True
         )
-        ttk.Button(row, text="Examinar…", command=self._browse_output).pack(
+        ttk.Button(row, text=t("form.browse"), command=self._browse_output).pack(
             side=tk.LEFT
         )
 
         # --- Opciones de detección ------------------------------------
-        opts = ttk.LabelFrame(self._container, text="Opciones de detección", padding="10")
+        opts = ttk.LabelFrame(self._container, text=t("options.title"), padding="10")
         opts.pack(fill=tk.X, pady=8)
 
         row = ttk.Frame(opts)
         row.pack(fill=tk.X, pady=3)
-        ttk.Label(row, text="Umbral (menor = más cortes):", width=26).pack(
+        ttk.Label(row, text=t("options.threshold"), width=26).pack(
             side=tk.LEFT
         )
         ttk.Entry(row, textvariable=self.threshold, width=10).pack(side=tk.LEFT)
 
         row = ttk.Frame(opts)
         row.pack(fill=tk.X, pady=3)
-        ttk.Label(row, text="Mín. largo de escena (frames):", width=26).pack(
+        ttk.Label(row, text=t("options.min_scene_len"), width=26).pack(
             side=tk.LEFT
         )
         ttk.Entry(row, textvariable=self.min_scene_len, width=10).pack(side=tk.LEFT)
@@ -199,20 +199,20 @@ class SceneCutBatchGUI(tk.Tk):
         row = ttk.Frame(opts)
         row.pack(fill=tk.X, pady=3)
         ttk.Checkbutton(
-            row, text="Buscar en subcarpetas (--recursive)", variable=self.recursive
+            row, text=t("options.recursive"), variable=self.recursive
         ).pack(side=tk.LEFT)
         ttk.Checkbutton(
-            row, text="Solo listar cortes, no escribir (--dry-run)",
+            row, text=t("options.dry_run"),
             variable=self.dry_run,
         ).pack(side=tk.LEFT, padx=(20, 0))
 
         row = ttk.Frame(opts)
         row.pack(fill=tk.X, pady=3)
         ttk.Checkbutton(
-            row, text="Progreso en JSON (--json-progress)", variable=self.json_progress
+            row, text=t("options.json_progress"), variable=self.json_progress
         ).pack(side=tk.LEFT)
         ttk.Checkbutton(
-            row, text="Marcadores G/Y/R (--confidence, v1.1)",
+            row, text=t("options.confidence"),
             variable=self.confidence,
         ).pack(side=tk.LEFT, padx=(20, 0))
 
@@ -220,7 +220,7 @@ class SceneCutBatchGUI(tk.Tk):
         btn_frame = ttk.Frame(self._container)
         btn_frame.pack(pady=12)
         self.btn_run = ttk.Button(
-            btn_frame, text="Ejecutar detección", command=self._on_run, width=22
+            btn_frame, text=t("button.run"), command=self._on_run, width=22
         )
         self.btn_run.pack()
 
@@ -229,14 +229,14 @@ class SceneCutBatchGUI(tk.Tk):
         self.progress.pack(fill=tk.X, pady=(4, 0))
 
         # --- Log ------------------------------------------------------
-        ttk.Label(self._container, text="Salida:", anchor="w").pack(
+        ttk.Label(self._container, text=t("log.label"), anchor="w").pack(
             fill=tk.X, pady=(10, 2)
         )
         self.log = scrolledtext.ScrolledText(self._container, height=12, wrap=tk.WORD)
         self.log.pack(fill=tk.BOTH, expand=True)
 
         # Estado
-        self.status = ttk.Label(self._container, text="Listo", anchor="w")
+        self.status = ttk.Label(self._container, text=t("status.ready"), anchor="w")
         self.status.pack(fill=tk.X, pady=(6, 0))
 
     # ------------------------------------------------------------------ #
@@ -251,14 +251,14 @@ class SceneCutBatchGUI(tk.Tk):
         self._build_ui()
 
     def _browse_input(self) -> None:
-        d = filedialog.askdirectory(title="Seleccionar carpeta de videos")
+        d = filedialog.askdirectory(title=t("filedialog.input.title"))
         if d:
             self.input_dir.set(d)
             if not self.output_dir.get():
                 self.output_dir.set(str(Path(d) / "cuts"))
 
     def _browse_output(self) -> None:
-        d = filedialog.askdirectory(title="Seleccionar carpeta de salida")
+        d = filedialog.askdirectory(title=t("filedialog.output.title"))
         if d:
             self.output_dir.set(d)
 
@@ -269,7 +269,7 @@ class SceneCutBatchGUI(tk.Tk):
 
     def _on_run(self) -> None:
         if not self.input_dir.get():
-            messagebox.showerror("Error", "Selecciona una carpeta de videos primero.")
+            messagebox.showerror(t("dialog.error.title"), t("dialog.error.no_folder"))
             return
 
         if self.is_running:
@@ -278,7 +278,7 @@ class SceneCutBatchGUI(tk.Tk):
         self.is_running = True
         self.btn_run.state(["disabled"])
         self.progress.start(10)
-        self.status.config(text="Ejecutando…")
+        self.status.config(text=t("status.running"))
         self.log.delete("1.0", tk.END)
 
         thread = threading.Thread(target=self._run_worker, daemon=True)
@@ -299,61 +299,60 @@ class SceneCutBatchGUI(tk.Tk):
             def progress(event: dict) -> None:
                 ev = event.get("event")
                 if ev == "start":
-                    self.after(
-                        0, lambda: self._log(f"Inicio: {event.get('total')} clips")
-                    )
+                    msg = t("log.start", total=event.get("total"))
+                    self.after(0, lambda m=msg: self._log(m))
                 elif ev == "clip_start":
-                    self.after(
-                        0,
-                        lambda: self._log(
-                            f"[{event.get('index')}/{event.get('total')}] "
-                            f"{event.get('clip')} iniciado"
-                        ),
+                    msg = t(
+                        "log.clip_start",
+                        index=event.get("index"),
+                        total=event.get("total"),
+                        clip=event.get("clip"),
                     )
+                    self.after(0, lambda m=msg: self._log(m))
                 elif ev == "clip_done":
-                    self.after(
-                        0,
-                        lambda: self._log(
-                            f"[{event.get('index')}/{event.get('total')}] "
-                            f"{event.get('clip')} listo "
-                            f"({event.get('scenes')} escenas, ETA {event.get('eta_sec'):.0f}s)"
-                        ),
+                    msg = t(
+                        "log.clip_done",
+                        index=event.get("index"),
+                        total=event.get("total"),
+                        clip=event.get("clip"),
+                        scenes=event.get("scenes"),
+                        eta_sec=event.get("eta_sec"),
                     )
+                    self.after(0, lambda m=msg: self._log(m))
                 elif ev == "clip_error":
-                    self.after(
-                        0,
-                        lambda: self._log(
-                            f"[{event.get('index')}/{event.get('total')}] "
-                            f"{event.get('clip')} ERROR: {event.get('error')}"
-                        ),
+                    msg = t(
+                        "log.clip_error",
+                        index=event.get("index"),
+                        total=event.get("total"),
+                        clip=event.get("clip"),
+                        error=event.get("error"),
                     )
+                    self.after(0, lambda m=msg: self._log(m))
                 elif ev == "done":
-                    self.after(
-                        0,
-                        lambda: self._log(
-                            f"Finalizado: {event.get('succeeded')} OK, "
-                            f"{event.get('failed')} fallidos"
-                        ),
+                    msg = t(
+                        "log.done",
+                        succeeded=event.get("succeeded"),
+                        failed=event.get("failed"),
                     )
+                    self.after(0, lambda m=msg: self._log(m))
 
             detect_folder(input_dir, cfg, progress=progress, write_xml=not self.dry_run.get())
 
             self.after(
-                0, lambda: self.status.config(text="Completado con éxito")
+                0, lambda: self.status.config(text=t("status.completed"))
             )
             self.after(
                 0,
                 lambda: messagebox.showinfo(
-                    "Listo",
-                    "La detección se completó. Los archivos XML se guardaron en "
-                    + str(out_dir or input_dir / "cuts"),
+                    t("dialog.done.title"),
+                    t("dialog.done.body", path=str(out_dir or input_dir / "cuts")),
                 ),
             )
         except Exception as exc:  # noqa: BLE001
-            self.after(0, lambda: self.status.config(text="Error"))
+            self.after(0, lambda: self.status.config(text=t("status.error")))
             self.after(
                 0,
-                lambda: messagebox.showerror("Error", str(exc)),
+                lambda: messagebox.showerror(t("dialog.error.title"), str(exc)),
             )
         finally:
             self.after(0, lambda: self.progress.stop())
