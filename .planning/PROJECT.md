@@ -118,38 +118,16 @@ Sí. Homebrew no descubre proyectos automáticamente: alguien debe crear una fó
 `https://github.com/MustangXPress7/homebrew-tap` que descargue el binario de macOS desde
 los releases de este repositorio y lo instale.
 
-Ejemplo de fórmula (pendiente de crear una vez haya un binario de macOS publicado):
+La fórmula borrador ya está preparada en este repositorio:
+`.planning/homebrew-tap/Formula/scenecutbatch.rb`
 
-```ruby
-class Scenecutbatch < Formula
-  desc "Batch scene-cut detection that emits FCP7 XML importable by professional video editors"
-  homepage "https://github.com/MustangXPress7/scenecutbatch"
-  version "0.1.1"
-
-  if OS.mac?
-    if Hardware::CPU.arm?
-      url "https://github.com/MustangXPress7/scenecutbatch/releases/download/v0.1.1/scenecutbatch-0.1.1-macos-aarch64"
-      sha256 "REVISAR_AL_PUBLICAR"
-    else
-      url "https://github.com/MustangXPress7/scenecutbatch/releases/download/v0.1.1/scenecutbatch-0.1.1-macos-x86_64"
-      sha256 "REVISAR_AL_PUBLICAR"
-    end
-  end
-
-  def install
-    bin.install "scenecutbatch"
-  end
-
-  test do
-    system "#{bin}/scenecutbatch", "--version"
-  end
-end
-```
+Solo falta que alguien con acceso al repositorio `homebrew-tap` la copie a
+`Formula/scenecutbatch.rb` y actualice los valores `sha256` cuando se publique el
+primer binario de macOS como asset de un release.
 
 **Notas:**
-- Esta fórmula asume que un futuro pipeline de GitHub Actions compilará y subirá un binario de macOS como asset del release (por ejemplo `scenecutbatch-0.1.1-macos-x86_64`). Hasta que ese binario exista, la fórmula es un esqueleto.
+- Esta fórmula asume que un futuro pipeline de GitHub Actions compilará y subirá un binario de macOS como asset del release (por ejemplo `scenecutbatch-0.1.1-macos-x86_64.app.zip`). Hasta que ese binario exista, la fórmula es un esqueleto con `sha256 = "REVISAR_AL_PUBLICAR"`.
 - Mientras tanto, los usuarios de macOS pueden ejecutar desde código fuente: `python -m scenecutbatch` o `python -m scenecutbatch.gui`.
-
 
 ## Relationship to Other Tools
 
@@ -158,3 +136,11 @@ confidence markers, progress reporting, Pinokio packaging) but has no runtime
 dependency on any of them during independent development. It is a self-contained,
 standalone application. See `docs/09-EXTENSIBILITY-AND-REUSE.md` for how other
 tools can consume its documented API and schema.
+
+## Sister Project: CosechaMedia
+
+**CosechaMedia** (`https://github.com/MustangXPress7/CosechaMedia`) is a sister project by the same author.
+
+- **Relationship:** Shares the same author and technology stack (Python, FCP7 XML, scene-cut detection). SceneCutBatch was promoted from the EsqueletoEdit seed and shares conventions with CosechaMedia.
+- **Release pattern reference:** CosechaMedia v1.6.2 publishes raw executables (no zip bundles) as GitHub Release assets — `CosechaMedia-windows-x86_64.exe`, `CosechaMedia-macos.app.zip`, `CosechaMedia-linux-x86_64` — each with a matching `.sha256` checksum file. This pattern was adopted for SceneCutBatch (see D-37).
+- **Homebrew tap:** CosechaMedia may be installable via `https://github.com/MustangXPress7/homebrew-tap` — the same tap where a SceneCutBatch formula would live.
