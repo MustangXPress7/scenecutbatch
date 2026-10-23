@@ -48,6 +48,15 @@
 - **Bilingual GUI** (added 2026-10-23): English/Spanish with OS language auto-detection and in-app EN/ES switch — PRES-05.
 - **Studio signature** (added 2026-10-23): "Hecho por JMW Studio" in GUI, READMEs, CLI output and package metadata — PRES-06.
 
+**Plans:** 5 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Bilingual GUI rework (i18n catalog + layout + EN/ES switch + credit)
+- [ ] 03-02-PLAN.md — Python source/docstring sweep + CLI version footer + pyproject metadata
+- [ ] 03-03-PLAN.md — READMEs + HANDOFF.md public copy sweep
+- [ ] 03-04-PLAN.md — docs/ sweep (docs/09 reframed as extensibility) + repo-wide PRES-03 gate
+- [ ] 03-05-PLAN.md — Packaging metadata (.deb/.rpm/.desktop) + phase-closing sweep + final review
+
 ---
 
 ### Phase 4: Confidence
