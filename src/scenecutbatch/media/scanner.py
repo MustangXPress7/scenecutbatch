@@ -1,4 +1,4 @@
-"""Media scanning (reuse EsqueletoEdit patterns)."""
+"""Media scanning: supported extensions and ffprobe metadata."""
 
 from __future__ import annotations
 

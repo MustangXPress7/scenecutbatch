@@ -1,4 +1,4 @@
-"""Scene Cut Batch — batch scene-cut detection for Premiere Pro."""
+"""Scene Cut Batch — batch scene-cut detection that emits FCP7 XML (xmeml) importable by professional video editors."""
 
 __version__ = "0.1.0"
 

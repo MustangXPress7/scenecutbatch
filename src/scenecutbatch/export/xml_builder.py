@@ -1,4 +1,4 @@
-"""FCP7 XML builder for virtual subclips — Premiere Pro compatible."""
+"""FCP7 XML (xmeml) builder for virtual subclips."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ def _clean_text(text: str) -> str:
 
 
 def _pathurl(path: Path) -> str:
-    """Build a Premiere-compatible file://localhost/ pathurl (forward slashes)."""
+    """Build an FCP7 xmeml file://localhost/ pathurl (forward slashes)."""
     absolute = path.resolve()
     return "file://localhost/" + absolute.as_posix()
 
@@ -40,9 +40,9 @@ def _tc_string(frames: int, fps: Fraction) -> str:
 
 
 def build_xml(result: DetectionResult, config: Optional[DetectConfig] = None) -> str:
-    """Return FCP7 xmeml v5 XML string compatible with Premiere Pro.
+    """Return FCP7 xmeml v5 XML string importable by professional video editors.
 
-    Structure mirrors what Premiere Pro exports for scene-cut detection:
+    Structure mirrors what those editors export for scene-cut detection:
       <xmeml version="5">
         <bin>
           <name>{clean_name}</name>
