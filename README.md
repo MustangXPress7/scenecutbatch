@@ -1,10 +1,9 @@
 # Scene Cut Batch
 
-> Batch scene-cut detection for Adobe Premiere Pro — generates FCP7 XML files with virtual subclips so an editor can review and pick takes without re-encoding or duplicating media.
+> Batch scene-cut detection that emits FCP7 XML (xmeml) with virtual subclips, importable by professional video editors.
 
-**Status:** Active development (Phase 2 — Launch prep & multi-platform)
 **License:** Apache-2.0
-**Parent ecosystem:** EsqueletoEdit (local AI editing platform). This module is being developed as an *independent program* first so it can be built and validated in isolation, with the clear intent of being integrated later as a native tool *inside* EsqueletoEdit.
+A local, offline desktop app plus CLI — no cloud, no account.
 
 ---
 
@@ -14,13 +13,13 @@ A small, focused, local-first CLI (and optional GUI) that:
 
 1. Takes a folder of video clips.
 2. For each clip, runs **PySceneDetect** (ContentDetector, threshold 27.0 default) to find hard cuts.
-3. Emits **one FCP7 XML file per clip** that Premiere Pro can import directly.
+3. Emits **one FCP7 XML file per clip** that professional video editors import.
 4. Each XML creates a bin containing:
    - a **master sequence** with all detected cuts in order, and
    - **virtual subclips** pointing at the original media (no duplication).
 5. Optionally tags ambiguous/short scenes with confidence markers (Green/Yellow/Red) so the editor knows what to double-check.
 
-The point is to replace Premiere's slow, one-clip-at-a-time "Scene Edit Detection" with a background batch job over hundreds of clips.
+The point is to replace slow, one-clip-at-a-time scene-cut detection with a background batch job over hundreds of clips.
 
 ---
 
@@ -30,7 +29,7 @@ The point is to replace Premiere's slow, one-clip-at-a-time "Scene Edit Detectio
 |---|---|
 | Batch scan | Recursively scan folders of video clips (mp4, mov, mxf, avi, mkv, webm) |
 | Hard-cut detection | PySceneDetect ContentDetector with configurable threshold and min scene length |
-| FCP7 XML output | One `<clip_stem>_cuts.xml` per clip, Premiere-importable |
+| FCP7 XML output | One `<clip_stem>_cuts.xml` per clip, importable by professional video editors |
 | Master sequence | Each XML contains a master sequence with all cuts in timeline order |
 | Virtual subclips | One subclip per detected scene referencing original media (no duplication) |
 | Error isolation | One bad/corrupt clip does not abort the batch |
@@ -199,7 +198,7 @@ For each input clip `MyVideo.mp4`, the tool writes `MyVideo_cuts.xml` containing
 - A master `<sequence>` with all detected cuts in timeline order
 - One virtual `<clip>` (subclip) per detected scene, referencing the original media via `file://localhost/` path URLs (no media duplication)
 
-Premiere Pro imports the XML and creates a bin with the master sequence and subclips.
+A professional video editor that reads FCP7 XML imports the XML and creates a bin with the master sequence and subclips.
 
 ---
 
@@ -223,3 +222,5 @@ Premiere Pro imports the XML and creates a bin with the master sequence and subc
 ## License
 
 Apache-2.0. See [`LICENSE`](LICENSE) for full text.
+
+**Made by JMW Studio.**
