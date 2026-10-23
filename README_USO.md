@@ -6,15 +6,14 @@
 ## ¿Qué es?
 
 SceneCutBatch detecta cortes de escena en carpeta de videos y genera archivos
-FCP7 XML (xmeml) que Adobe Premiere Pro importa directamente. Cada XML crea un
+FCP7 XML (xmeml) que importan los editores de vídeo profesionales. Cada XML crea un
 contenedor con:
 
 - **Secuencia maestra** con todos los cortes en orden
 - **Subclips virtuales** (uno por escena) que apuntan al medio original
   (no duplica nada)
 
-Ideal para editores que pasan horas pasando clip por clip por la detección
-nativa de Premiere.
+Ideal para editores que pasan horas pasando clip por clip por la detección uno a uno; salida en FCP7 XML (xmeml v5).
 
 ---
 
@@ -87,7 +86,7 @@ dist\scenecutbatch.exe "C:\Footage" --recursive --threshold 30 --dry-run
 ## 3. Qué produce
 
 Por cada video `vacacion.mp4` se genera un archivo `vacacion_cuts.xml` en la
-carpeta de salida. Al importarlo en Premiere Pro:
+carpeta de salida. Al importarlo en tu editor de vídeo:
 
 - Se crea un **contenedor (bin)** con el nombre del clip.
 - Dentro, una **secuencia maestra** con todos los cortes en línea de tiempo.
@@ -102,7 +101,7 @@ carpeta de salida. Al importarlo en Premiere Pro:
 C:\Footage\
  ├─ vacacion.mp4
   └─ cuts\
-       └─ vacacion_cuts.xml   ← importar este en Premiere
+       └─ vacacion_cuts.xml   ← importar este en tu editor
 ```
 
 ---
@@ -116,7 +115,7 @@ C:\Footage\
 | El ejecutable no abre / se cierra rápido | Ejecuta desde terminal para ver el mensaje de error real |
 | Los XML no se escriben | Verifica que la carpeta de salida exista y tengas permisos de escritura |
 | Timecodes parecen incorrectos | Instala ffmpeg (proporciona FPS reales del video) |
-| Premiere no importa el XML | Abre el XML con un editor de texto y verifica que empiece con `<?xml version="1.0" encoding="UTF-8"?>` y `<xmeml version="5">` |
+| Tu editor no importa el XML | Abre el XML con un editor de texto y verifica que empiece con `<?xml version="1.0" encoding="UTF-8"?>` y `<xmeml version="5">` |
 
 ---
 
@@ -128,6 +127,8 @@ C:\Footage\
 - **Typer** — interfaz de línea de comandos
 - **xml.etree.ElementTree** — generación de XML FCP7 (xmeml v5)
 - Licencia: Apache-2.0
+
+**Hecho por JMW Studio.**
 
 ---
 

@@ -6,7 +6,7 @@
 ## ¿Qué es?
 
 SceneCutBatch detecta cortes de escena en carpetas de video y genera archivos
-FCP7 XML que Adobe Premiere Pro importa directamente. Cada XML crea:
+FCP7 XML que importan los editores de vídeo profesionales. Cada XML crea:
 
 - **Secuencia maestra** con todos los cortes en orden
 - **Subclips virtuales** que apuntan al medio original (sin duplicar nada)
@@ -76,7 +76,7 @@ ffmpeg es opcional (recomendado para timecodes exactos): `brew install ffmpeg`
 ## Qué produce
 
 Por cada `vacacion.mp4` se genera `vacacion_cuts.xml` que al importar en
-Premiere Pro crea:
+un editor de vídeo profesional crea:
 
 - Un contenedor (bin) con el nombre del clip
 - Una secuencia maestra con todos los cortes en orden
@@ -90,3 +90,5 @@ Premiere Pro crea:
 - No se instala nada en el sistema (solo librerías Python en el entorno local).
 - Puedes borrar la carpeta y se desinstala por completo.
 - Funciona sin conexión a internet (una vez instaladas las dependencias).
+
+**Hecho por JMW Studio.**
