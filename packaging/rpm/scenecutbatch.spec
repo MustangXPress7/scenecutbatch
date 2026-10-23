@@ -1,7 +1,7 @@
 Name: scenecutbatch
 Version: 0.1.0
 Release: 1%{?dist}
-Summary: Batch scene-cut detection for Adobe Premiere Pro
+Summary: Batch scene-cut detection with FCP7 XML virtual subclips
 License: Apache-2.0
 URL: https://github.com/MustangXPress7/scenecutbatch
 Source0: %{name}-%{version}.tar.gz
@@ -13,7 +13,7 @@ Requires: ffmpeg
 
 %description
 SceneCutBatch detects hard scene cuts across folders of video clips using
-PySceneDetect and emits Premiere-importable FCP7 XML files with virtual
+PySceneDetect and emits FCP7 XML files with virtual
 subclips referencing the original media (no duplication).
 
 %prep

@@ -192,8 +192,8 @@ def detect(
     """Detect scene cuts in a folder of clips (Scene Cut Batch).
 
     Detects scene cuts across a folder of clips and emits one FCP7 XML
-    (xmeml) per clip, importable by professional video editors such as
-    Premiere Pro, DaVinci Resolve and other NLEs that read FCP7 XML.
+    (xmeml) per clip, importable by FCP7-capable professional video editors
+    such as DaVinci Resolve and other NLEs that read FCP7 XML.
     """
     _run_detect(
         Path(input_dir),

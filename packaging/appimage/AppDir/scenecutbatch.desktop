@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Scene Cut Batch
-Comment=Batch scene-cut detection for Adobe Premiere Pro
+Comment=Batch scene-cut detection with FCP7 XML virtual subclips
 Exec=scenecutbatch
 Icon=scenecutbatch
 Terminal=false
