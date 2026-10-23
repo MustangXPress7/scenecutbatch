@@ -89,15 +89,19 @@ any hard dependency on a host application.
 ## Distribution Decisions
 
 **D-37: Executable-only distribution (Windows).** The release artifact is the standalone `.exe`
-produced by PyInstaller, not a `.zip` bundle. The `.exe` is self-contained (embeds Python
-interpreter, all dependencies, and the `assets/logo.png` icon), so it runs by itself without
-any accompanying files. `run.bat` / `install.bat` are convenience scripts only and are not
-required for execution. This avoids shipping redundant ZIPs that duplicate what the `.exe`
-already contains.
+produced by PyInstaller, not a `.zip` bundle. Pattern confirmed by sister project CosechaMedia
+(v1.6.2 publishes `CosechaMedia-windows-x86_64.exe` as a raw 70 MB executable, no zip). The
+`.exe` is self-contained (embeds Python interpreter, all dependencies, and the `assets/logo.png`
+icon), so it runs by itself without any accompanying files. `run.bat` / `install.bat` are
+convenience scripts only and are not required for execution. This avoids shipping redundant ZIPs
+that duplicate what the `.exe` already contains. Each binary ships with a matching `.sha256`
+checksum file for download verification.
 
 **D-38: macOS installation via Homebrew tap.** macOS users install via the project's Homebrew
 tap at `https://github.com/MustangXPress7/homebrew-tap` rather than downloading a standalone
-`.app` bundle or `.zip`. No macOS binary is published as a release artifact.
+`.app` bundle or `.zip`. No macOS binary is published as a release artifact. (CosechaMedia does
+publish a `CosechaMedia-macos.app.zip` for reference, but this project opts for Homebrew-only
+distribution on macOS.)
 
 **D-39: Logo refresh.** `assets/logo.ico` regenerated from `assets/logo.png` (700×700 RGBA)
 with embedded sizes 16, 32, 48, 64, 128, 256 px. The `.exe` embeds this icon for the Windows
