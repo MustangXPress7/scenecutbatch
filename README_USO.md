@@ -28,15 +28,35 @@ Ideal para editores que pasan horas pasando clip por clip por la detección uno 
 
 ### macOS
 
+**Opción A — Homebrew (recomendado):**
+
+macOS se distribuye exclusivamente vía Homebrew tap:
+
+```bash
+brew tap MustangXPress7/tap
+brew install scenecutbatch
+```
+
+Luego ejecuta:
+
+```bash
+scenecutbatch detect "/ruta/a/tus/clips"
+```
+
+**Opción B — Desde código fuente:**
+
 1. Abre Terminal en la carpeta del proyecto.
 2. Ejecuta:
 
    ```bash
-   chmod +x install.sh
-   ./install.sh
+   pip3 install -e .
    ```
 
-3. El script crea el ejecutable en `dist/scenecutbatch`.
+3. Ejecuta el ejecutable:
+
+   ```bash
+   ./dist/scenecutbatch /ruta/a/tus/clips
+   ```
 
 > **ffmpeg (opcional pero recomendado):** La herramienta funciona sin ffmpeg,
 > pero con ffmpeg obtiene los FPS exactos de cada video (timecodes precisos).

@@ -30,23 +30,37 @@ No necesitas instalar Python ni nada más. El ejecutable lo trae todo incluido.
 
 ---
 
-## Versión Mac (portable — usa Python 3 de macOS)
+## Versión Mac
 
-Archivos: `run_mac.sh`, `install_mac.sh`, `src/scenecutbatch/`
+**Opción A — Homebrew (recomendado):**
+
+macOS se distribuye exclusivamente vía Homebrew tap:
+
+```bash
+brew tap MustangXPress7/tap
+brew install scenecutbatch
+scenecutbatch detect /ruta/a/tus/clips
+```
+
+**Opción B — Desde código fuente (portable):**
 
 macOS ya trae Python 3. Solo necesitas instalar las librerías una vez:
 
 1. Abre Terminal en la carpeta del proyecto.
 2. Ejecuta:
+
    ```bash
-   chmod +x run_mac.sh install_mac.sh
-   ./install_mac.sh
+   pip3 install -e .
    ```
+
 3. Luego ejecuta:
+
    ```bash
    ./run_mac.sh /ruta/a/tus/clips
    ```
-4. O abre la interfaz gráfica con doble clic en `gui.py` o:
+
+4. O abre la interfaz gráfica con doble clic en `SceneCutBatch.command` o:
+
    ```bash
    python3 src/scenecutbatch/gui.py
    ```
