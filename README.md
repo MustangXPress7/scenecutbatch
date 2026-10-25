@@ -45,20 +45,26 @@ The point is to replace slow, one-clip-at-a-time scene-cut detection with a back
 
 ### Windows
 
-1. Install Python 3.10+ from https://python.org
-2. Install ffmpeg (ffprobe must be on PATH)
-3. Install dependencies:
+**Option A — Prebuilt executable (recommended)**
 
-   ```cmd
-   pip install scenedetect[opencv]>=0.6.3,<0.7 typer>=0.12 rich>=13.0 pyyaml>=6.0
-   ```
+Download the latest `scenecutbatch-<version>-windows-x86_64.exe` from the [Releases page](https://github.com/MustangXPress7/scenecutbatch/releases) and run it directly. It is self-contained (embeds the Python interpreter and all dependencies) and requires no installation.
 
-4. Run:
+```cmd
+scenecutbatch-0.1.5-windows-x86_64.exe detect "C:\Footage\Day1" --out-dir "C:\Footage\Day1\cuts"
+```
 
-   ```cmd
-   pip install -e .
-   scenecutbatch detect "C:\Footage\Day1" --out-dir "C:\Footage\Day1\cuts"
-   ```
+Each release ships with a matching `.sha256` checksum file for download verification.
+
+**Option B — From source**
+
+1. Install Python 3.10+ from https://python.org (check "Add Python to PATH").
+2. Install ffmpeg (ffprobe must be on PATH): `winget install ffmpeg` or from https://ffmpeg.org.
+3. Build and run:
+
+```cmd
+pip install -e .
+scenecutbatch detect "C:\Footage\Day1" --out-dir "C:\Footage\Day1\cuts"
+```
 
 Or use the bundled launcher:
 
@@ -66,89 +72,89 @@ Or use the bundled launcher:
 run.bat
 ```
 
-Or install via the Windows installer:
-
-```cmd
-install.bat
-```
-
 ### macOS
 
-1. Install Python 3.10+ (e.g. via Homebrew: `brew install python@3.11`)
-2. Install ffmpeg: `brew install ffmpeg`
-3. Install dependencies:
+**Option A — Homebrew (recommended)**
 
-   ```bash
-   pip3 install scenedetect[opencv]>=0.6.3,<0.7 typer>=0.12 rich>=13.0 pyyaml>=6.0
-   ```
+macOS is distributed exclusively via the project's Homebrew tap. No standalone `.app` or `.zip` is published for macOS.
 
-4. Run:
+```bash
+brew tap MustangXPress7/tap
+brew install scenecutbatch
+```
 
-   ```bash
-   pip3 install -e .
-   scenecutbatch detect "/Volumes/Footage/Day1" --out-dir "/Volumes/Footage/Day1/cuts"
-   ```
+Then run:
+
+```bash
+scenecutbatch detect "/Volumes/Footage/Day1" --out-dir "/Volumes/Footage/Day1/cuts"
+```
+
+> The Homebrew formula lives at `https://github.com/MustangXPress7/homebrew-tap` and downloads the signed `.app.zip` from the GitHub Releases. If you hit a "formula not found" error, make sure the tap was added correctly and that a release for your version exists.
+
+**Option B — From source**
+
+1. Install Python 3.10+ (e.g. via Homebrew: `brew install python@3.11`).
+2. Install ffmpeg: `brew install ffmpeg` (optional but recommended for exact timecodes).
+3. Build and run:
+
+```bash
+pip3 install -e .
+scenecutbatch detect "/Volumes/Footage/Day1" --out-dir "/Volumes/Footage/Day1/cuts"
+```
 
 Or double-click `SceneCutBatch.command` to launch.
 
 ### Linux
 
+**From source**
+
 1. Install Python 3.10+ and ffmpeg:
 
-   ```bash
-   sudo apt update && sudo apt install -y python3 python3-pip ffmpeg
-   ```
+```bash
+sudo apt update && sudo apt install -y python3 python3-pip ffmpeg
+```
 
-2. Install dependencies:
+2. Install dependencies and run:
 
-   ```bash
-   pip3 install scenedetect[opencv]>=0.6.3,<0.7 typer>=0.12 rich>=13.0 pyyaml>=6.0
-   ```
-
-3. Run:
-
-   ```bash
-   pip3 install -e .
-   scenecutbatch detect ~/Footage/Day1 --out-dir ~/Footage/Day1/cuts
-   ```
+```bash
+pip3 install -e .
+scenecutbatch detect ~/Footage/Day1 --out-dir ~/Footage/Day1/cuts
+```
 
 Or use the Linux install script:
 
 ```bash
 bash install_linux.sh
+./run.sh detect ~/Footage/Day1
 ```
 
 ---
 
 ## Prebuilt releases
 
-Binaries for all three platforms are built automatically by GitHub Actions
-(`.github/workflows/release.yml`) and published to the
-[Releases page](https://github.com/MustangXPress7/scenecutbatch/releases):
+Binaries are built automatically by GitHub Actions (`.github/workflows/release.yml`) and published to the [Releases page](https://github.com/MustangXPress7/scenecutbatch/releases):
 
-| Platform | Artifacts |
-|---|---|
-| Windows | `SceneCutBatch-<version>-Windows.zip` (contains `scenecutbatch.exe`, GUI + CLI) |
-| macOS | `SceneCutBatch-<version>-macos.zip` (portable binary) + `SceneCutBatch-<version>-macOS.zip` (`.app` bundle) |
-| Linux | `SceneCutBatch-<version>-linux.zip` + `.deb` + AppImage |
+| Platform | Artifact | Notes |
+|---|---|---|
+| Windows | `scenecutbatch-<version>-windows-x86_64.exe` + `.sha256` | Standalone `.exe` (PyInstaller), self-contained |
+| macOS | Published via [Homebrew tap](https://github.com/MustangXPress7/homebrew-tap) | Formula downloads the signed `.app.zip` from the release |
+| Linux | Built locally from source | No standalone release artifact yet |
 
 To publish a new release, push a version tag:
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.1.5
+git push origin v0.1.5
 ```
 
-PyInstaller does not cross-compile: each platform is built on its own runner
-(windows-latest, macos-latest, ubuntu-latest). You can also trigger a build
-manually from the Actions tab ("Run workflow") without publishing a release.
+PyInstaller does not cross-compile: each platform is built on its own runner (windows-latest, macos-latest, ubuntu-latest). You can also trigger a build manually from the Actions tab ("Run workflow") without publishing a release.
 
 To build locally on the target OS:
 
 ```bash
 pip install -e . && pip install "scenedetect[opencv]" pyinstaller
 pyinstaller scenecutbatch.spec --clean --noconfirm
-python scripts/make_release.py --version 0.1.0 --platform <windows|macos|linux>
+python scripts/make_release.py --version 0.1.5 --platform <windows|macos|linux>
 ```
 
 ---
@@ -214,7 +220,7 @@ A professional video editor that reads FCP7 XML imports the XML and creates a bi
 | XML | stdlib `xml.etree.ElementTree` (FCP7 xmeml v5) |
 | CLI | Typer |
 | Config | YAML (`pyyaml`) |
-| Packaging | Pinokio + Nuitka/PyInstaller |
+| Packaging | PyInstaller |
 | Tests | pytest |
 
 ---
